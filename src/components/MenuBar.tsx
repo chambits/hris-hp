@@ -1,5 +1,6 @@
 import { BarChart, Dashboard, Menu, People } from '@mui/icons-material';
 import {
+  Divider,
   Drawer,
   Grid,
   IconButton,
@@ -31,11 +32,16 @@ export const MenuBar = () => {
         <Menu />
       </IconButton>
       {/* Sidebar for Desktop */}
-      <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Grid item xs={12} md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
         <Sidebar variant="permanent">
-          <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-            HeartPace
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{ fontWeight: 'bold', marginBottom: 3 }}
+          >
+            Heartpace HR
           </Typography>
+          <Divider sx={{ bgcolor: 'white' }} />
           <MenuList>
             <MenuItem component={Link} to="/dashboard">
               <ListItemIcon>
@@ -96,10 +102,9 @@ export const MenuBar = () => {
 };
 
 export const Sidebar = styled(Drawer)(({ theme }) => ({
-  width: 240,
-  flexShrink: 0,
+  width: '16vw',
   '& .MuiDrawer-paper': {
-    width: 240,
+    width: '16vw',
     backgroundColor: '#111827',
     color: 'white',
     padding: theme.spacing(2),
