@@ -3,9 +3,9 @@ import { LegendOrdinal } from '@visx/legend';
 import { scaleOrdinal } from '@visx/scale';
 import { Pie } from '@visx/shape';
 import { employees } from '../../../data';
+import { Box } from '@mui/material';
 
-// Compute status counts
-const statusCounts = employees.reduce((acc, emp) => {
+const statusCounts = employees.reduce<Record<string, number>>((acc, emp) => {
   acc[emp.status] = (acc[emp.status] || 0) + 1;
   return acc;
 }, {});
@@ -15,20 +15,18 @@ const data = Object.keys(statusCounts).map((key) => ({
   count: statusCounts[key],
 }));
 
-// Chart dimensions
 const width = 400;
 const height = 400;
 const radius = Math.min(width, height) / 2;
 
-// Color scale
 const colorScale = scaleOrdinal({
   domain: data.map((d) => d.status),
   range: ['#4CAF50', '#FFC107', '#F44336', '#2196F3', '#9C27B0'],
 });
 
-const PieChart = () => {
+export const PieChart = () => {
   return (
-    <div>
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
       <svg width={width} height={height}>
         <Group top={height / 2} left={width / 2}>
           <Pie
@@ -42,7 +40,10 @@ const PieChart = () => {
             {(pie) =>
               pie.arcs.map((arc, i) => (
                 <g key={i}>
-                  <path d={pie.path(arc)} fill={colorScale(arc.data.status)} />
+                  <path
+                    d={pie.path(arc) || ''}
+                    fill={colorScale(arc.data.status || '')}
+                  />
                 </g>
               ))
             }
@@ -50,12 +51,7 @@ const PieChart = () => {
         </Group>
       </svg>
 
-      {/* Legend */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
-        <LegendOrdinal scale={colorScale} direction="row" shape="circle" />
-      </div>
-    </div>
+      <LegendOrdinal scale={colorScale} direction="row" shape="circle" />
+    </Box>
   );
 };
-
-export default PieChart;

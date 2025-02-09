@@ -1,3 +1,3 @@
-export * from './Employees';
-export * from './Statistics';
+export * from './EmployeesPage';
+export * from './StatisticsPage';
 export * from './Dashboard';

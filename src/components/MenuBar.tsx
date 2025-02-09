@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuList,
+  Paper,
   styled,
   Typography,
 } from '@mui/material';
@@ -24,20 +25,25 @@ export const MenuBar = () => {
         sx={{
           display: { xs: 'block', md: 'none' },
           position: 'absolute',
-          top: 10,
-          left: 10,
+          top: 5,
+          left: 5,
         }}
         onClick={() => setMobileOpen(true)}
       >
         <Menu />
       </IconButton>
       {/* Sidebar for Desktop */}
-      <Grid item xs={12} md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
-        <Sidebar variant="permanent">
+      <Grid item sx={{ display: { xs: 'none', md: 'block' } }}>
+        <DesktopMenu elevation={0} variant="outlined">
           <Typography
             variant="h5"
             textAlign="center"
-            sx={{ fontWeight: 'bold', marginBottom: 3 }}
+            sx={{
+              fontWeight: 'bold',
+              marginTop: 2,
+              marginBottom: 3,
+              fontFamily: 'Poppins',
+            }}
           >
             Heartpace HR
           </Typography>
@@ -64,16 +70,28 @@ export const MenuBar = () => {
               <ListItemText>Statistics</ListItemText>
             </MenuItem>
           </MenuList>
-        </Sidebar>
+        </DesktopMenu>
       </Grid>
       {/* Sidebar for Mobile (Temporary Drawer) */}
-      <Sidebar
+      <MobileMenu
         variant="temporary"
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         ModalProps={{ keepMounted: true }}
-        sx={{ display: { xs: 'block', md: 'none' } }}
+        sx={{ display: { xs: 'block', md: 'none' }, width: 400 }}
       >
+        <Typography
+          variant="h5"
+          textAlign="center"
+          sx={{
+            fontWeight: 'bold',
+            marginBottom: 3,
+            fontFamily: 'Poppins',
+          }}
+        >
+          Heartpace HR
+        </Typography>
+        <Divider sx={{ bgcolor: 'white' }} />
         <MenuList>
           <MenuItem component={Link} to="/dashboard">
             <ListItemIcon>
@@ -96,17 +114,23 @@ export const MenuBar = () => {
             <ListItemText>Statistics</ListItemText>
           </MenuItem>
         </MenuList>
-      </Sidebar>
+      </MobileMenu>
     </>
   );
 };
 
-export const Sidebar = styled(Drawer)(({ theme }) => ({
-  width: '16vw',
+export const MobileMenu = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
-    width: '16vw',
-    backgroundColor: '#111827',
-    color: 'white',
+    backgroundColor: '#090E23',
+    color: '#ffffff',
     padding: theme.spacing(2),
   },
+}));
+
+export const DesktopMenu = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#090E23',
+  color: '#ffffff',
+  padding: theme.spacing(2),
+  height: '100vh',
+  borderRadius: 0,
 }));

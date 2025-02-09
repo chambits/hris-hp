@@ -1,3 +1,7 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useTheme } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import {
   ClientSideRowModelModule,
   ColDef,
@@ -8,11 +12,15 @@ import {
   ModuleRegistry,
   NumberFilterModule,
   TextFilterModule,
+  colorSchemeLight,
+  themeQuartz,
 } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { useGetEmployeesQuery } from './employeesApi';
+import { useAppTheme } from '../../store/themeSlice';
+import { Employee } from './types';
 
+const themeLight = themeQuartz.withPart(colorSchemeLight);
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   ColumnAutoSizeModule,
@@ -21,17 +29,34 @@ ModuleRegistry.registerModules([
   DateFilterModule,
 ]);
 
-export const EmployeesTable = () => {
+interface EmployeesTableProps {
+  employees: Employee[] | undefined;
+  isLoading: boolean;
+  onRowDeleted: (id: string) => void;
+  onRowEdited: (employee: Employee) => void;
+}
+
+export const EmployeesTable: React.FC<EmployeesTableProps> = ({
+  employees,
+  isLoading,
+  onRowDeleted,
+  onRowEdited,
+}) => {
   const gridRef = useRef<AgGridReact>(null);
-  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-  const gridStyle = useMemo(() => ({ height: 800, width: '100%' }), []);
-  const { data: employees, error, isLoading } = useGetEmployeesQuery();
+  const gridStyle = useMemo(() => ({ height: '70vh', width: '100%' }), []);
+  const { mode } = useAppTheme();
+  const theme = useTheme();
 
-  console.log(isLoading);
+  const themeDark = themeQuartz.withParams({
+    backgroundColor: '#090E23',
+    foregroundColor: theme.palette.text.primary,
+    headerTextColor: theme.palette.text.primary,
+    headerBackgroundColor: theme.palette.background.default,
+    oddRowBackgroundColor: theme.palette.background.default,
+    headerColumnResizeHandleColor: theme.palette.text.primary,
+  });
 
-  //   const [rowData] = useState(employees);
-
-  const statusCellRenderer = (params: any) => {
+  const statusCellRenderer = (params: { value: string }) => {
     const status = params.value;
     let color = '';
     let backgroundColor = '';
@@ -76,20 +101,62 @@ export const EmployeesTable = () => {
     );
   };
 
+  const actionCellRenderer = (params: { data: Employee }) => {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '10px',
+          padding: '5px',
+        }}
+      >
+        <EditIcon
+          data-testid="edit-icon"
+          style={{ cursor: 'pointer' }}
+          fontSize="small"
+          onClick={() => onRowEdited(params.data)}
+        />
+        <Divider orientation="vertical" flexItem />
+        <DeleteIcon
+          data-testid="delete-icon"
+          style={{ cursor: 'pointer', color: 'red' }}
+          fontSize="small"
+          onClick={() => onRowDeleted(params.data.id)}
+        />
+      </div>
+    );
+  };
+
   const [columnDefs] = useState<ColDef[]>([
-    { field: 'id', minWidth: 150 },
-    { field: 'name', minWidth: 150 },
+    { field: 'id', minWidth: 140 },
+    { field: 'name', minWidth: 120 },
     { field: 'email', minWidth: 100 },
-    { field: 'position', minWidth: 100 },
-    { field: 'department', minWidth: 100 },
-    { field: 'hireDate', minWidth: 100, filter: 'agDateColumnFilter' },
+    { field: 'position', minWidth: 120 },
+    { field: 'department', minWidth: 120 },
+    {
+      field: 'hireDate',
+      minWidth: 100,
+      filter: 'agDateColumnFilter',
+      sort: 'desc',
+    },
     {
       field: 'status',
-      minWidth: 100,
+      minWidth: 120,
       cellRenderer: statusCellRenderer,
     },
     { field: 'age', minWidth: 20 },
-    { field: 'country', minWidth: 100 },
+    { field: 'country', minWidth: 30 },
+    {
+      headerName: 'Actions',
+      field: 'actions',
+      minWidth: 50,
+      cellRenderer: actionCellRenderer,
+      filter: false,
+      sortable: false,
+      resizable: false,
+    },
   ]);
   const defaultColDef = useMemo<ColDef>(() => {
     return {
@@ -99,40 +166,29 @@ export const EmployeesTable = () => {
     };
   }, []);
 
-  const onGridSizeChanged = useCallback(
-    (params: GridSizeChangedEvent) => {
-      // get the current grids width
-      const gridWidth =
-        document.querySelector('.ag-body-viewport')!.clientWidth;
-      // keep track of which columns to hide/show
-      const columnsToShow = [];
-      const columnsToHide = [];
-      // iterate over all columns (visible or not) and work out
-      // now many columns can fit (based on their minWidth)
-      let totalColsWidth = 0;
-      const allColumns = params.api.getColumns();
-      if (allColumns && allColumns.length > 0) {
-        for (let i = 0; i < allColumns.length; i++) {
-          const column = allColumns[i];
-          totalColsWidth += column.getMinWidth();
-          if (totalColsWidth > gridWidth) {
-            columnsToHide.push(column.getColId());
-          } else {
-            columnsToShow.push(column.getColId());
-          }
+  const onGridSizeChanged = useCallback((params: GridSizeChangedEvent) => {
+    const gridWidth = document.querySelector('.ag-body-viewport')!.clientWidth;
+    const columnsToShow = [];
+    const columnsToHide = [];
+    let totalColsWidth = 0;
+    const allColumns = params.api.getColumns();
+    if (allColumns && allColumns.length > 0) {
+      for (let i = 0; i < allColumns.length; i++) {
+        const column = allColumns[i];
+        totalColsWidth += column.getMinWidth();
+        if (totalColsWidth > gridWidth) {
+          columnsToHide.push(column.getColId());
+        } else {
+          columnsToShow.push(column.getColId());
         }
       }
-      // show/hide columns based on current grid width
-      params.api.setColumnsVisible(columnsToShow, true);
-      params.api.setColumnsVisible(columnsToHide, false);
-      // wait until columns stopped moving and fill out
-      // any available space to ensure there are no gaps
-      window.setTimeout(() => {
-        params.api.sizeColumnsToFit();
-      }, 10);
-    },
-    [window]
-  );
+    }
+    params.api.setColumnsVisible(columnsToShow, true);
+    params.api.setColumnsVisible(columnsToHide, false);
+    window.setTimeout(() => {
+      params.api.sizeColumnsToFit();
+    }, 10);
+  }, []);
 
   const onFirstDataRendered = useCallback((params: FirstDataRenderedEvent) => {
     params.api.sizeColumnsToFit();
@@ -143,10 +199,8 @@ export const EmployeesTable = () => {
   }, []);
 
   return (
-    // <div style={containerStyle}>
     <div style={gridStyle}>
       <AgGridReact
-        //   domLayout={'autoHeight'}
         popupParent={popupParent}
         ref={gridRef}
         onRowClicked={(e) => console.log('ROW CLICKED', e)}
@@ -155,11 +209,10 @@ export const EmployeesTable = () => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         loading={isLoading}
-        suppressServerSideFullWidthLoadingRow={true}
         onGridSizeChanged={onGridSizeChanged}
         onFirstDataRendered={onFirstDataRendered}
+        theme={mode === 'dark' ? themeDark : themeLight}
       />
     </div>
-    // </div>
   );
 };
