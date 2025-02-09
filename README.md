@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# HRIS - HP
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an Employee Management System built with React, TypeScript, and Material-UI. It provides functionalities to manage employee data, including adding, editing, and displaying employee information in a table format.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Employee Table**: Displays a list of employees with options to edit or delete entries.
+- **Employee Form**: Allows adding new employees or editing existing employee details.
+- **State Management**: Utilizes Redux for state management.
+- **API Integration**: Uses RTK Query for API calls to add or update employee data.
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **src/features/employees/EmployeesTable.tsx**: Component for displaying the employee table with actions for editing and deleting employees.
+- **src/features/employees/EmployeeForm.tsx**: Component for the employee form used to add or edit employee details.
+- **src/features/employees/**tests**/EmployeesTable.test.tsx**: Test file for the `EmployeesTable` component.
+- **src/features/employees/**tests**/EmployeeForm.test.tsx**: Test file for the `EmployeeForm` component.
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone the repository:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   git clone https://github.com/hris-hp/hris-hp.git
+   cd hris-hp
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. Install dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+   ```bash
+   yarn install
+   ```
+
+3. Start the development server:
+   ```bash
+   yarn dev
+   ```
+
+## Testing
+
+To run the tests, use the following command:
+
+```bash
+yarn test
 ```
