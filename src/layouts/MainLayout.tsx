@@ -16,8 +16,8 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         sx={{
           p: 2,
           backgroundColor: theme.palette.background.default,
-          // height: '100vh',
-          // overflow: 'auto',
+          height: '100vh',
+          overflowY: 'scroll',
         }}
       >
         {children}

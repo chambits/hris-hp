@@ -6,9 +6,10 @@ import { ChartSection } from '../features/statistics/ChartSection';
 import { HeatmapChart } from '../features/statistics/HeatmapChart';
 import { LineChart } from '../features/statistics/LineChart';
 import { PieChart } from '../features/statistics/PieChart';
-
+import { useGetEmployeesQuery } from '../features/employees/employeesApi';
 export const StatisticsPage = () => {
   const theme = useTheme();
+  const { data: employees } = useGetEmployeesQuery({ q: '' });
   return (
     <Box
       sx={{
@@ -23,16 +24,16 @@ export const StatisticsPage = () => {
       />
       <Grid container spacing={3}>
         <ChartSection title="Employees per Department">
-          <BarChart />
+          <BarChart employees={employees || []} />
         </ChartSection>
         <ChartSection title="Employee Status Distribution">
-          <PieChart />
+          <PieChart employees={employees || []} />
         </ChartSection>
         <ChartSection title="Employee Hires Over Years">
-          <LineChart />
+          <LineChart employees={employees || []} />
         </ChartSection>
         <ChartSection title="Employee Count by Country & Status">
-          <HeatmapChart />
+          <HeatmapChart employees={employees || []} />
         </ChartSection>
       </Grid>
     </Box>
