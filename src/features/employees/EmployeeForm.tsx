@@ -13,12 +13,13 @@ import {
   FormControl,
   Typography,
   useTheme,
+  FormHelperText,
 } from '@mui/material';
 import {
   useAddEmployeeMutation,
   useUpdateEmployeeMutation,
 } from './employeesApi';
-import { Employee, EmployeeStatus } from './types';
+import { Department, Employee, EmployeeStatus } from './types';
 
 interface AddEmployeeFormProps {
   open: boolean;
@@ -28,7 +29,9 @@ interface AddEmployeeFormProps {
 }
 
 const employeeSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  name: Yup.string()
+    .min(3, 'Name must be at least 3 characters')
+    .required('Name is required'),
   email: Yup.string()
     .email('Invalid email address')
     .required('Email is required'),
@@ -113,7 +116,7 @@ export const EmployeeForm: React.FC<AddEmployeeFormProps> = ({
         boxShadow={theme.spacing(3)}
         p={4}
         maxWidth={theme.spacing(70)}
-        height="90vh"
+        height="80vh"
         overflow="hidden"
         borderRadius={1}
         margin={2}
@@ -123,12 +126,12 @@ export const EmployeeForm: React.FC<AddEmployeeFormProps> = ({
         </Typography>
         {addEmployeeError && (
           <Typography color="error" variant="body2">
-            Failed to save employee. Please try again.
+            Unable to add the employee. Please try again.
           </Typography>
         )}
         {updateEmployeeError && (
           <Typography color="error" variant="body2">
-            Failed to update employee. Please try again.
+            Unable to update the employee. Please try again.
           </Typography>
         )}
         <Box flex={1} overflow="auto" paddingRight={theme.spacing(1)}>
@@ -166,19 +169,31 @@ export const EmployeeForm: React.FC<AddEmployeeFormProps> = ({
               error={formik.touched.position && Boolean(formik.errors.position)}
               helperText={formik.touched.position && formik.errors.position}
             />
-            <TextField
-              fullWidth
-              margin="normal"
-              id="department"
-              name="department"
-              label="Department"
-              value={formik.values.department}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.department && Boolean(formik.errors.department)
-              }
-              helperText={formik.touched.department && formik.errors.department}
-            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="department-label">Department</InputLabel>
+              <Select
+                labelId="department-label"
+                id="department"
+                name="department"
+                value={formik.values.department}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.department && Boolean(formik.errors.department)
+                }
+                label="Department"
+              >
+                {Object.values(Department).map((dept) => (
+                  <MenuItem key={dept} value={dept}>
+                    {dept}
+                  </MenuItem>
+                ))}
+              </Select>
+              {formik.touched.department && formik.errors.department && (
+                <FormHelperText error>
+                  {formik.errors.department}
+                </FormHelperText>
+              )}
+            </FormControl>
             <TextField
               fullWidth
               margin="normal"
@@ -242,6 +257,7 @@ export const EmployeeForm: React.FC<AddEmployeeFormProps> = ({
                 color="primary"
                 variant="contained"
                 fullWidth
+                data-testid="form-submit-button"
                 type="submit"
                 sx={{ height: theme.spacing(6) }}
                 disabled={isAdding || isUpdating}

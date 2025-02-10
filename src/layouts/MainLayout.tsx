@@ -1,5 +1,5 @@
 import { Grid, useTheme } from '@mui/material';
-import { MenuBar } from '../components/MenuBar';
+import { MenuBar } from '../components/MenuBar/MenuBar';
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
 

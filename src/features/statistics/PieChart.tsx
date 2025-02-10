@@ -35,7 +35,7 @@ const ResponsivePie = ({ width, height, employees }: ResponsivePieProps) => {
   });
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+    <Box display="flex" flexDirection="column" alignItems="center">
       <svg width={width} height={height}>
         <Group top={height / 2} left={width / 2}>
           <Pie
@@ -68,7 +68,7 @@ const ResponsivePie = ({ width, height, employees }: ResponsivePieProps) => {
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          gap: '8px',
+          gap: '1px',
         }}
       />
     </Box>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '.';
 
 interface ThemeState {
-  mode: 'light' | 'dark';
+  mode: 'light' | 'dark' | 'system';
 }
 
 const initialState: ThemeState = {
@@ -29,6 +29,6 @@ export const useAppTheme = () => {
 
   return {
     mode,
-    setTheme: (value: 'light' | 'dark') => dispatch(setTheme(value)),
+    setTheme: (value: 'light' | 'dark' | 'system') => dispatch(setTheme(value)),
   };
 };

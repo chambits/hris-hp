@@ -1,6 +1,13 @@
 import { createTheme } from '@mui/material';
 
 export const lightTheme = createTheme({
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
   palette: {
     mode: 'light',
     primary: {
@@ -23,6 +30,13 @@ export const lightTheme = createTheme({
 });
 
 export const darkTheme = createTheme({
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
   palette: {
     mode: 'dark',
     primary: {

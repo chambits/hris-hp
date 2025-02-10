@@ -32,8 +32,8 @@ ModuleRegistry.registerModules([
 interface EmployeesTableProps {
   employees: Employee[] | undefined;
   isLoading: boolean;
-  onRowDeleted: (id: string) => void;
-  onRowEdited: (employee: Employee) => void;
+  onRowDeleted?: (id: string) => void;
+  onRowEdited?: (employee: Employee) => void;
 }
 
 export const EmployeesTable: React.FC<EmployeesTableProps> = ({
@@ -116,24 +116,24 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
           data-testid="edit-icon"
           style={{ cursor: 'pointer' }}
           fontSize="small"
-          onClick={() => onRowEdited(params.data)}
+          onClick={() => onRowEdited?.(params.data)}
         />
         <Divider orientation="vertical" flexItem />
         <DeleteIcon
           data-testid="delete-icon"
           style={{ cursor: 'pointer', color: 'red' }}
           fontSize="small"
-          onClick={() => onRowDeleted(params.data.id)}
+          onClick={() => onRowDeleted?.(params.data.id)}
         />
       </div>
     );
   };
 
   const [columnDefs] = useState<ColDef[]>([
-    { field: 'id', minWidth: 140 },
+    { field: 'id', minWidth: 120 },
     { field: 'name', minWidth: 120 },
     { field: 'email', minWidth: 100 },
-    { field: 'position', minWidth: 120 },
+    { field: 'position', minWidth: 100 },
     { field: 'department', minWidth: 120 },
     {
       field: 'hireDate',
@@ -146,18 +146,19 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
       minWidth: 120,
       cellRenderer: statusCellRenderer,
     },
-    { field: 'age', minWidth: 20 },
-    { field: 'country', minWidth: 30 },
+    { field: 'age', minWidth: 80 },
+    { field: 'country', minWidth: 80 },
     {
       headerName: 'Actions',
       field: 'actions',
-      minWidth: 50,
+      minWidth: 80,
       cellRenderer: actionCellRenderer,
       filter: false,
       sortable: false,
       resizable: false,
     },
   ]);
+
   const defaultColDef = useMemo<ColDef>(() => {
     return {
       filter: 'agTextColumnFilter',

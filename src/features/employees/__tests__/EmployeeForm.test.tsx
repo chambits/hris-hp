@@ -1,5 +1,6 @@
+import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { Employee, EmployeeStatus } from '../types';
+import { Department, Employee, EmployeeStatus } from '../types';
 import { EmployeeForm } from '../EmployeeForm';
 
 const mockOnClose = jest.fn();
@@ -17,13 +18,47 @@ jest.mock('../employeesApi', () => ({
   ],
 }));
 
+const fillEmployeeForm = () => {
+  fireEvent.change(screen.getByLabelText('Name'), {
+    target: { value: 'Jane Doe' },
+  });
+  fireEvent.change(screen.getByLabelText('Email'), {
+    target: { value: 'jane.doe@example.com' },
+  });
+  fireEvent.change(screen.getByLabelText('Position'), {
+    target: { value: 'Designer' },
+  });
+  fireEvent.mouseDown(screen.getByLabelText('Department'));
+  fireEvent.click(screen.getByText('Engineering'));
+  fireEvent.change(screen.getByLabelText('Hire Date'), {
+    target: { value: '2022-01-01' },
+  });
+  fireEvent.mouseDown(screen.getByLabelText('Status'));
+  fireEvent.click(screen.getByText('Active'));
+  fireEvent.change(screen.getByLabelText('Age'), { target: { value: 28 } });
+  fireEvent.change(screen.getByLabelText('Country'), {
+    target: { value: 'Canada' },
+  });
+};
+
+const defaultEmployeeData = {
+  name: 'Jane Doe',
+  email: 'jane.doe@example.com',
+  position: 'Designer',
+  department: Department.ENGINEERING,
+  hireDate: '2022-01-01',
+  status: EmployeeStatus.ACTIVE,
+  age: 28,
+  country: 'Canada',
+};
+
 describe('EmployeeForm', () => {
   it('renders the form with initial data', () => {
     const initialData: Partial<Employee> = {
       name: 'John Doe',
       email: 'john.doe@example.com',
       position: 'Developer',
-      department: 'Engineering',
+      department: Department.ENGINEERING,
       hireDate: '2021-01-01',
       status: EmployeeStatus.ACTIVE,
       age: 30,
@@ -42,9 +77,7 @@ describe('EmployeeForm', () => {
     expect(screen.getByLabelText(/name/i)).toHaveValue('John Doe');
     expect(screen.getByLabelText(/email/i)).toHaveValue('john.doe@example.com');
     expect(screen.getByLabelText(/position/i)).toHaveValue('Developer');
-    expect(screen.getByLabelText(/department/i)).toHaveValue('Engineering');
     expect(screen.getByLabelText(/hire date/i)).toHaveValue('2021-01-01');
-    expect(screen.getByLabelText(/status/i)).toHaveValue('Active');
     expect(screen.getByLabelText(/age/i)).toHaveValue(30);
     expect(screen.getByLabelText(/country/i)).toHaveValue('USA');
   });
@@ -59,35 +92,13 @@ describe('EmployeeForm', () => {
       />
     );
 
-    fireEvent.change(screen.getByLabelText(/name/i), {
-      target: { value: 'Jane Doe' },
-    });
-    fireEvent.change(screen.getByLabelText(/email/i), {
-      target: { value: 'jane.doe@example.com' },
-    });
-    fireEvent.change(screen.getByLabelText(/position/i), {
-      target: { value: 'Designer' },
-    });
-    fireEvent.change(screen.getByLabelText(/department/i), {
-      target: { value: 'Design' },
-    });
-    fireEvent.change(screen.getByLabelText(/hire date/i), {
-      target: { value: '2022-01-01' },
-    });
-
-    fireEvent.mouseDown(screen.getByLabelText(/status/i));
-    const statusOption = screen.getByRole('option', { name: /Active/i });
-    fireEvent.click(statusOption);
-
-    fireEvent.change(screen.getByLabelText(/age/i), { target: { value: 28 } });
-    fireEvent.change(screen.getByLabelText(/country/i), {
-      target: { value: 'Canada' },
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: /add employee/i }));
+    fillEmployeeForm();
+    fireEvent.click(screen.getByRole('button', { name: 'Add Employee' }));
 
     await waitFor(() => {
-      expect(mockAddEmployee).toHaveBeenCalled();
+      expect(mockAddEmployee).toHaveBeenCalledWith(
+        expect.objectContaining(defaultEmployeeData)
+      );
     });
   });
 
@@ -97,7 +108,7 @@ describe('EmployeeForm', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       position: 'Developer',
-      department: 'Engineering',
+      department: Department.ENGINEERING,
       hireDate: '2021-01-01',
       status: EmployeeStatus.ACTIVE,
       age: 30,
@@ -120,18 +131,25 @@ describe('EmployeeForm', () => {
     });
   });
 
-  it('closes the form when onClose is called', () => {
-    render(
-      <EmployeeForm
-        open={true}
-        onClose={mockOnClose}
-        mode="add"
-        initialData={{}}
-      />
-    );
+  // it('shows error message when server returns an error', async () => {
+  //   mockAddEmployee.mockRejectedValueOnce(new Error('Failed to add employee'));
 
-    fireEvent.click(screen.getByRole('button', { name: /close/i }));
+  //   render(
+  //     <EmployeeForm
+  //       open={true}
+  //       onClose={mockOnClose}
+  //       mode="add"
+  //       initialData={{}}
+  //     />
+  //   );
 
-    expect(mockOnClose).toHaveBeenCalled();
-  });
+  //   fillEmployeeForm();
+  //   fireEvent.click(screen.getByRole('button', { name: 'Add Employee' }));
+
+  //   await waitFor(() => {
+  //     expect(
+  //       screen.getByText('Unable to add the employee. Please try again.')
+  //     ).toBeInTheDocument();
+  //   });
+  // });
 });

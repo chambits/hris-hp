@@ -18,8 +18,9 @@ export const ChartSection: React.FC<ChartSectionProps> = ({
         sx={{
           padding: theme.spacing(2),
           borderRadius: theme.spacing(1),
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: theme.palette.background.paper,
           textAlign: 'center',
+          overflow: 'auto',
         }}
       >
         <Box

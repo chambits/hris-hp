@@ -7,6 +7,7 @@ import { HeatmapChart } from '../features/statistics/HeatmapChart';
 import { LineChart } from '../features/statistics/LineChart';
 import { PieChart } from '../features/statistics/PieChart';
 import { useGetEmployeesQuery } from '../features/employees/employeesApi';
+
 export const StatisticsPage = () => {
   const theme = useTheme();
   const { data: employees } = useGetEmployeesQuery({ q: '' });
@@ -39,3 +40,5 @@ export const StatisticsPage = () => {
     </Box>
   );
 };
+
+export default StatisticsPage;

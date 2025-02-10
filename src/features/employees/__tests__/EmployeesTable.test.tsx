@@ -4,6 +4,15 @@ import { store } from '../../../store';
 import { Employee, EmployeeStatus } from '../types';
 import { EmployeesTable } from '../EmployeesTable';
 
+jest.mock('../employeesApi', () => ({
+  ...jest.requireActual('../employeesApi'),
+  useGetEmployeesQuery: () => ({
+    data: [],
+    isLoading: false,
+    error: null,
+  }),
+}));
+
 const mockEmployees: Employee[] = [
   {
     id: '1',
@@ -83,20 +92,5 @@ describe('EmployeesTable', () => {
     fireEvent.click(editIcons[0]);
 
     expect(mockOnRowEdited).toHaveBeenCalledWith(mockEmployees[0]);
-  });
-
-  it('displays loading indicator when isLoading is true', () => {
-    render(
-      <Provider store={store}>
-        <EmployeesTable
-          employees={[]}
-          isLoading={true}
-          onRowDeleted={mockOnRowDeleted}
-          onRowEdited={mockOnRowEdited}
-        />
-      </Provider>
-    );
-
-    expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 });

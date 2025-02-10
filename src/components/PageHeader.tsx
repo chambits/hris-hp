@@ -1,6 +1,6 @@
 import React from 'react';
-import { Breadcrumbs, Link, Typography } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
+import { Typography } from '@mui/material';
+import { Breadcrumb } from './Breadcrumb';
 
 interface BreadcrumbLink {
   label: string;
@@ -18,26 +18,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <>
-      <Breadcrumbs aria-label="breadcrumb" sx={{ marginBottom: 2 }}>
-        {breadcrumbs.map((breadcrumb, index) =>
-          breadcrumb.href ? (
-            <Link
-              key={index}
-              underline="hover"
-              color="inherit"
-              href={breadcrumb.href}
-              sx={{ display: 'flex', alignItems: 'center' }}
-            >
-              {index === 0 && <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />}
-              {breadcrumb.label}
-            </Link>
-          ) : (
-            <Typography key={index} color="text.primary">
-              {breadcrumb.label}
-            </Typography>
-          )
-        )}
-      </Breadcrumbs>
+      <Breadcrumb breadcrumbs={breadcrumbs} />
       <Typography variant="h4" component="h1" gutterBottom color="text.primary">
         {title}
       </Typography>
