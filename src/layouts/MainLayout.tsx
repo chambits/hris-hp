@@ -1,4 +1,4 @@
-import { Grid, useTheme } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 import { MenuBar } from '../components/MenuBar/MenuBar';
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
@@ -11,7 +11,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <Grid
         item
         xs={12}
-        sm={10}
+        sm={12}
         md={10}
         sx={{
           p: 2,
@@ -20,7 +20,17 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           overflowY: 'scroll',
         }}
       >
-        {children}
+        <Box
+          component="main"
+          display="flex"
+          flexDirection="column"
+          bgcolor={theme.palette.background.default}
+          color={theme.palette.text.primary}
+          padding={theme.spacing(2)}
+          overflow="hidden"
+        >
+          {children}
+        </Box>
       </Grid>
     </Grid>
   );

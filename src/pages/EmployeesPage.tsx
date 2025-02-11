@@ -1,27 +1,15 @@
 import { Search } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Skeleton,
-  Paper,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Button, Grid, Paper, Skeleton, TextField } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
+import { ConfirmationDialog } from '../components/ConfirmationDialog';
 import { PageHeader } from '../components/PageHeader';
-import { Employee } from '../features/employees/types';
-import { EmployeeForm } from '../features/employees/EmployeeForm';
-import { EmployeesTable } from '../features/employees/EmployeesTable';
+import { EmployeeForm } from '../features/employees/components/EmployeeForm';
+import { EmployeesTable } from '../features/employees/components/EmployeesTable';
 import {
   useDeleteEmployeeMutation,
   useGetEmployeesQuery,
 } from '../features/employees/employeesApi';
+import { Employee } from '../features/employees/types';
 
 const SearchBarSkeleton = () => (
   <Grid
@@ -42,16 +30,15 @@ const SearchBarSkeleton = () => (
 const TableSkeleton = () => (
   <Paper sx={{ p: 2 }}>
     <Box sx={{ mb: 2 }}>
-      <Skeleton variant="rectangular" height={52} />
+      <Skeleton variant="rectangular" height={60} />
     </Box>
     {[...Array(5)].map((_, index) => (
-      <Skeleton key={index} height={52} sx={{ my: 1 }} />
+      <Skeleton key={index} height={50} sx={{ my: 1 }} />
     ))}
   </Paper>
 );
 
 export const EmployeesPage = () => {
-  const theme = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
@@ -113,15 +100,7 @@ export const EmployeesPage = () => {
   }, [searchTerm, refetch]);
 
   return (
-    <Box
-      component="main"
-      display="flex"
-      flexDirection="column"
-      bgcolor={theme.palette.background.default}
-      color={theme.palette.text.primary}
-      padding={theme.spacing(2)}
-      overflow="hidden"
-    >
+    <>
       <PageHeader
         title="Employees"
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Employees' }]}
@@ -160,6 +139,7 @@ export const EmployeesPage = () => {
               >
                 <Grid item>
                   <Button
+                    color="primary"
                     variant="contained"
                     onClick={() => handleOpenModal('add')}
                   >
@@ -189,23 +169,17 @@ export const EmployeesPage = () => {
         mode={modalMode}
         initialData={editingEmployee || undefined}
       />
-      <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this employee?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmDelete} color="primary" autoFocus>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+      <ConfirmationDialog
+        open={isDialogOpen}
+        onClose={handleDialogClose}
+        onConfirm={handleConfirmDelete}
+        title="Confirm Delete"
+        content="Are you sure you want to delete this employee?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        confirmColor="error"
+      />
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import { Breadcrumb } from './Breadcrumb';
 
 interface BreadcrumbLink {
@@ -16,10 +16,17 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   breadcrumbs,
 }) => {
+  const theme = useTheme();
   return (
     <>
       <Breadcrumb breadcrumbs={breadcrumbs} />
-      <Typography variant="h4" component="h1" gutterBottom color="text.primary">
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        color="text.primary"
+        marginBottom={theme.spacing(5)}
+      >
         {title}
       </Typography>
     </>

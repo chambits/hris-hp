@@ -1,27 +1,27 @@
-import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  useTheme,
-  Skeleton,
-} from '@mui/material';
-import { PageHeader } from '../components/PageHeader';
 import { People, PersonOff, PersonOutline } from '@mui/icons-material';
-import { EmployeesTable } from '../features/employees/EmployeesTable';
+import { Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import React from 'react';
+import { PageHeader } from '../components/PageHeader';
+import { EmployeesTable } from '../features/employees/components/EmployeesTable';
 import { useGetEmployeesQuery } from '../features/employees/employeesApi';
-import { BarChart } from '../features/statistics/BarChart';
-import { HeatmapChart } from '../features/statistics/HeatmapChart';
+import { Employee } from '../features/employees/types';
+import { PieChart } from '../features/statistics';
+import { BarChart } from '../features/statistics/components/BarChart';
+import { ChartSection } from '../features/statistics/components/ChartSection';
 
-const StatCard = ({
-  title,
-  value,
-  icon,
-}: {
+interface StatCardProps {
   title: string;
   value: number;
   icon: React.ReactNode;
-}) => (
+}
+
+interface DashboardStats {
+  total: number;
+  active: number;
+  onLeave: number;
+}
+
+const StatCard: React.FC<StatCardProps> = ({ title, value, icon }) => (
   <Paper sx={{ p: 2 }}>
     <Box display="flex" alignItems="center" justifyContent="space-between">
       <Box>
@@ -54,141 +54,152 @@ const ChartSkeleton = ({ height }: { height: number }) => (
   </Paper>
 );
 
+const useEmployeeStats = (employees: Employee[]): DashboardStats => {
+  return React.useMemo(
+    () => ({
+      total: employees.length,
+      active: employees.filter((emp) => emp.status === 'Active').length,
+      onLeave: employees.filter((emp) => emp.status === 'On Leave').length,
+    }),
+    [employees]
+  );
+};
+
+const useRecentEmployees = (employees: Employee[], limit = 15) => {
+  return React.useMemo(
+    () =>
+      [...employees]
+        .sort(
+          (a, b) =>
+            new Date(b.hireDate).getTime() - new Date(a.hireDate).getTime()
+        )
+        .slice(0, limit),
+    [employees, limit]
+  );
+};
+
+const StatsSection = ({
+  stats,
+  isLoading,
+}: {
+  stats: DashboardStats;
+  isLoading: boolean;
+}) => (
+  <>
+    {isLoading ? (
+      <>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCardSkeleton />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCardSkeleton />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCardSkeleton />
+        </Grid>
+      </>
+    ) : (
+      <>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCard
+            title="Total Employees"
+            value={stats.total}
+            icon={<People fontSize="large" />}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCard
+            title="Active Employees"
+            value={stats.active}
+            icon={<PersonOutline fontSize="large" />}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <StatCard
+            title="Employees on Leave"
+            value={stats.onLeave}
+            icon={<PersonOff fontSize="large" />}
+          />
+        </Grid>
+      </>
+    )}
+  </>
+);
+
+const ChartsSection = ({
+  employees,
+  isLoading,
+}: {
+  employees: Employee[];
+  isLoading: boolean;
+}) => (
+  <>
+    <Grid item xs={12}>
+      {isLoading ? (
+        <ChartSkeleton height={450} />
+      ) : (
+        <ChartSection title="Employees by Department">
+          <BarChart employees={employees} />
+        </ChartSection>
+      )}
+    </Grid>
+    <Grid item xs={12}>
+      {isLoading ? (
+        <ChartSkeleton height={350} />
+      ) : (
+        <ChartSection title="Employee Status Distribution">
+          <PieChart employees={employees} />
+        </ChartSection>
+      )}
+    </Grid>
+  </>
+);
+
+const RecentEmployeesSection = ({
+  employees,
+  isLoading,
+}: {
+  employees: Employee[];
+  isLoading: boolean;
+}) => (
+  <Grid item xs={12}>
+    {isLoading ? (
+      <Paper sx={{ p: 2 }}>
+        <Skeleton width={200} height={32} sx={{ mb: 2 }} />
+        <Skeleton variant="rectangular" height={200} />
+      </Paper>
+    ) : (
+      <Paper sx={{ p: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          Recent Employees
+        </Typography>
+        <EmployeesTable employees={employees || []} isLoading={isLoading} />
+      </Paper>
+    )}
+  </Grid>
+);
+
 export const DashboardPage = () => {
-  const theme = useTheme();
   const { data: employees = [], isLoading } = useGetEmployeesQuery({});
-
-  const stats = {
-    total: employees.length,
-    active: employees.filter((emp) => emp.status === 'Active').length,
-    onLeave: employees.filter((emp) => emp.status === 'On Leave').length,
-  };
-
-  const recentEmployees = [...employees]
-    .sort(
-      (a, b) => new Date(b.hireDate).getTime() - new Date(a.hireDate).getTime()
-    )
-    .slice(0, 15);
+  const stats = useEmployeeStats(employees);
+  const recentEmployees = useRecentEmployees(employees);
 
   return (
-    <Box
-      component="main"
-      display="flex"
-      flexDirection="column"
-      bgcolor={theme.palette.background.default}
-      color={theme.palette.text.primary}
-      padding={theme.spacing(2)}
-      overflow="hidden"
-    >
+    <>
       <PageHeader
         title="Dashboard"
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Dashboard' }]}
       />
 
       <Grid container spacing={3}>
-        {isLoading ? (
-          <>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCardSkeleton />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCardSkeleton />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCardSkeleton />
-            </Grid>
-          </>
-        ) : (
-          <>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCard
-                title="Total Employees"
-                value={stats.total}
-                icon={<People fontSize="large" />}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCard
-                title="Active Employees"
-                value={stats.active}
-                icon={<PersonOutline fontSize="large" />}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <StatCard
-                title="Employees on Leave"
-                value={stats.onLeave}
-                icon={<PersonOff fontSize="large" />}
-              />
-            </Grid>
-          </>
-        )}
-
-        <Grid item xs={12}>
-          {isLoading ? (
-            <ChartSkeleton height={450} />
-          ) : (
-            <Paper
-              sx={{
-                p: 2,
-                height: '450px',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                Employees by Department
-              </Typography>
-              <Box sx={{ flex: 1, minHeight: 0 }}>
-                <BarChart employees={employees} />
-              </Box>
-            </Paper>
-          )}
-        </Grid>
-
-        <Grid item xs={12}>
-          {isLoading ? (
-            <ChartSkeleton height={350} />
-          ) : (
-            <Paper
-              sx={{
-                p: 2,
-                height: '350px',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                Employee Distribution by Country
-              </Typography>
-              <Box sx={{ flex: 1, minHeight: 0 }}>
-                <HeatmapChart employees={employees} />
-              </Box>
-            </Paper>
-          )}
-        </Grid>
-
-        {/* Employees Table */}
-        <Grid item xs={12}>
-          {isLoading ? (
-            <Paper sx={{ p: 2 }}>
-              <Skeleton width={200} height={32} sx={{ mb: 2 }} />
-              <Skeleton variant="rectangular" height={200} />
-            </Paper>
-          ) : (
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                Recent Employees
-              </Typography>
-              <EmployeesTable
-                employees={recentEmployees}
-                isLoading={isLoading}
-              />
-            </Paper>
-          )}
-        </Grid>
+        <StatsSection stats={stats} isLoading={isLoading} />
+        <ChartsSection employees={employees} isLoading={isLoading} />
+        <RecentEmployeesSection
+          employees={recentEmployees}
+          isLoading={isLoading}
+        />
       </Grid>
-    </Box>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import { BarChart, Dashboard, Menu, People } from '@mui/icons-material';
 import {
+  Box,
   Divider,
   Grid,
   IconButton,
@@ -9,9 +10,11 @@ import {
   MenuList,
   styled,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { forwardRef, ReactNode, useState } from 'react';
 import { LinkProps, Link as RouterLink, useLocation } from 'react-router-dom';
+import { ThemeSwitcher } from '../ThemeSwitcher';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
 
@@ -72,59 +75,82 @@ const StyledMenuItem = styled(MenuItemLink, {
   },
 }));
 
-// Menu Content Component
 const MenuContent = ({ onItemClick }: MenuContentProps) => {
   const location = useLocation();
 
   return (
     <>
-      <Typography
-        variant="h5"
-        textAlign="center"
-        sx={{
-          fontWeight: 'bold',
-          marginY: 2,
-          fontFamily: 'Poppins',
-        }}
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={2}
+        height="100%"
+        justifyContent="space-between"
       >
-        Heartpace HR
-      </Typography>
-      <Divider sx={{ bgcolor: 'white' }} />
-      <MenuList>
-        {menuItems.map((item) => (
-          <StyledMenuItem
-            key={item.path}
-            to={item.path}
-            onClick={onItemClick}
-            isActive={location.pathname === item.path}
+        <Box>
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{
+              fontWeight: 'bold',
+              marginY: 2,
+              fontFamily: 'Raleway',
+            }}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText>{item.label}</ListItemText>
-          </StyledMenuItem>
-        ))}
-      </MenuList>
+            Heartpace HR
+          </Typography>
+          <Divider sx={{ bgcolor: 'grey' }} />
+          <MenuList>
+            {menuItems.map((item) => (
+              <StyledMenuItem
+                key={item.path}
+                to={item.path}
+                onClick={onItemClick}
+                isActive={location.pathname === item.path}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.label}</ListItemText>
+              </StyledMenuItem>
+            ))}
+          </MenuList>
+        </Box>
+        <Box>
+          <ThemeSwitcher />
+        </Box>
+      </Box>
     </>
   );
 };
 
 export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const theme = useTheme();
   const handleMobileClose = () => setMobileOpen(false);
 
   return (
     <>
-      <IconButton
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        width="100%"
         sx={{
+          backgroundColor: theme.palette.background.default,
           display: { xs: 'block', md: 'none' },
-          position: 'absolute',
-          top: 5,
-          left: 5,
         }}
-        onClick={() => setMobileOpen(true)}
+        height={50}
       >
-        <Menu />
-      </IconButton>
+        <IconButton
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            position: 'absolute',
+            top: 5,
+            left: 5,
+          }}
+          onClick={() => setMobileOpen(true)}
+        >
+          <Menu />
+        </IconButton>
+      </Box>
 
       <Grid item sx={{ display: { xs: 'none', md: 'block' } }}>
         <DesktopMenu

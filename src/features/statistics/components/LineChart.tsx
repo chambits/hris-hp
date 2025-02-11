@@ -5,12 +5,8 @@ import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
 import { scaleLinear, scaleTime } from '@visx/scale';
 import { LinePath } from '@visx/shape';
-import { Employee } from '../employees/types';
-
-interface ChartData {
-  year: Date;
-  hires: number;
-}
+import { Employee } from '../../employees/types';
+import { useStats } from '../hooks/useStats';
 
 interface ResponsiveLineChartProps {
   width: number;
@@ -18,41 +14,31 @@ interface ResponsiveLineChartProps {
   employees: Employee[];
 }
 
-const ResponsiveLineChart = ({
-  width,
-  height,
-  employees,
-}: ResponsiveLineChartProps) => {
+const ResponsiveLineChart = ({ width, height }: ResponsiveLineChartProps) => {
   const theme = useTheme();
+  const { employeesHiresCountByYear } = useStats();
   const axisColor = theme.palette.text.primary;
 
   const margin = { top: 20, right: 30, bottom: 50, left: 40 };
 
-  const hiresByYear = employees.reduce<Record<number, number>>((acc, emp) => {
-    const year = new Date(emp.hireDate).getFullYear();
-    acc[year] = (acc[year] || 0) + 1;
-    return acc;
-  }, {});
-
-  const data: ChartData[] = Object.keys(hiresByYear).map((year) => ({
-    year: new Date(parseInt(year), 0, 1),
-    hires: hiresByYear[parseInt(year)],
-  }));
-
-  if (data.length === 0) {
+  if (employeesHiresCountByYear.length === 0) {
     return null;
   }
 
   const xScale = scaleTime({
     domain: [
-      new Date(Math.min(...data.map((d) => d.year.getTime()))),
-      new Date(Math.max(...data.map((d) => d.year.getTime()))),
+      new Date(
+        Math.min(...employeesHiresCountByYear.map((d) => d.year.getTime()))
+      ),
+      new Date(
+        Math.max(...employeesHiresCountByYear.map((d) => d.year.getTime()))
+      ),
     ],
     range: [margin.left, width - margin.right],
   });
 
   const yScale = scaleLinear({
-    domain: [0, Math.max(...data.map((d) => d.hires))],
+    domain: [0, Math.max(...employeesHiresCountByYear.map((d) => d.hires))],
     range: [height - margin.bottom, margin.top],
   });
 
@@ -85,8 +71,9 @@ const ResponsiveLineChart = ({
           tickStroke={axisColor}
           tickLabelProps={() => ({
             fill: axisColor,
-            fontSize: 11,
             textAnchor: 'middle',
+            dy: 1,
+            fontSize: 10,
           })}
           label="Year"
           labelProps={{
@@ -97,7 +84,7 @@ const ResponsiveLineChart = ({
         />
 
         <LinePath
-          data={data}
+          data={employeesHiresCountByYear}
           x={(d) => xScale(d.year)}
           y={(d) => yScale(d.hires)}
           stroke={theme.palette.primary.main}

@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -106,18 +106,7 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -126,6 +115,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -133,11 +135,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,46 +149,45 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Box, Grid } from '@mui/material';</span>
-<span class="cstat-no" title="statement not covered" >import { useTheme } from '@mui/material/styles';</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Grid, Skeleton } from '@mui/material';</span>
 <span class="cstat-no" title="statement not covered" >import { PageHeader } from '../components/PageHeader';</span>
-<span class="cstat-no" title="statement not covered" >import { BarChart } from '../features/statistics/BarChart';</span>
-<span class="cstat-no" title="statement not covered" >import { ChartSection } from '../features/statistics/ChartSection';</span>
-<span class="cstat-no" title="statement not covered" >import { HeatmapChart } from '../features/statistics/HeatmapChart';</span>
-<span class="cstat-no" title="statement not covered" >import { LineChart } from '../features/statistics/LineChart';</span>
-<span class="cstat-no" title="statement not covered" >import { PieChart } from '../features/statistics/PieChart';</span>
 <span class="cstat-no" title="statement not covered" >import { useGetEmployeesQuery } from '../features/employees/employeesApi';</span>
+<span class="cstat-no" title="statement not covered" >import {</span>
+  BarChart,
+  LineChart,
+  PieChart,
+  ScatterPlot,
+} from '../features/statistics';
+<span class="cstat-no" title="statement not covered" >import { ChartSection } from '../features/statistics/components/ChartSection';</span>
 &nbsp;
-export const <span class="cstat-no" title="statement not covered" >StatisticsPage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(</span>) =</span>&gt; {</span>
-  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
-  const { data: employees } = <span class="cstat-no" title="statement not covered" >useGetEmployeesQuery({ q: '' });</span>
+const chartConfigs = <span class="cstat-no" title="statement not covered" >[</span>
+  { title: 'Employees per Department', Component: BarChart },
+  { title: 'Employee Status Distribution', Component: PieChart },
+  { title: 'Employee Hires Over Years', Component: LineChart },
+  { title: 'Employee Age vs Years of Service', Component: ScatterPlot },
+];
+&nbsp;
+const StatisticsPage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  const { data: employees = <span class="branch-0 cbranch-no" title="branch not covered" >[],</span> isLoading } = <span class="cstat-no" title="statement not covered" >useGetEmployeesQuery({ q: '' });</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;Box
-      sx={{
-        backgroundColor: theme.palette.background.default,
-        color: theme.palette.text.primary,
-        padding: theme.spacing(2),
-      }}
-    &gt;
+    &lt;&gt;
       &lt;PageHeader
         title="Statistics"
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Statistics' }]}
       /&gt;
-      &lt;Grid container spacing={3}&gt;
-        &lt;ChartSection title="Employees per Department"&gt;
-          &lt;BarChart employees={employees || []} /&gt;
-        &lt;/ChartSection&gt;
-        &lt;ChartSection title="Employee Status Distribution"&gt;
-          &lt;PieChart employees={employees || []} /&gt;
-        &lt;/ChartSection&gt;
-        &lt;ChartSection title="Employee Hires Over Years"&gt;
-          &lt;LineChart employees={employees || []} /&gt;
-        &lt;/ChartSection&gt;
-        &lt;ChartSection title="Employee Count by Country &amp; Status"&gt;
-          &lt;HeatmapChart employees={employees || []} /&gt;
-        &lt;/ChartSection&gt;
+      &lt;Grid container spacing={4}&gt;
+        {chartConfigs.map(<span class="fstat-no" title="function not covered" >({</span> title, Component }) =&gt; (
+<span class="cstat-no" title="statement not covered" >          &lt;ChartSection key={title} t</span>itle={title}&gt;
+            {isLoading ? (
+              &lt;Skeleton variant="rectangular" width="100%" height={300} /&gt;
+            ) : (
+              &lt;Component employees={employees} /&gt;
+            )}
+          &lt;/ChartSection&gt;
+        ))}
       &lt;/Grid&gt;
-    &lt;/Box&gt;
+    &lt;/&gt;
   );
 };
 &nbsp;
@@ -202,7 +199,7 @@ export const <span class="cstat-no" title="statement not covered" >StatisticsPag
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-10T10:23:38.168Z
+                at 2025-02-11T04:03:15.870Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

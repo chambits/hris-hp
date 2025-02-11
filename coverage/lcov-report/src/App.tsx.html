@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -107,19 +107,7 @@
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -127,7 +115,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -137,22 +125,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,56 +153,44 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { ThemeProvider } from '@mui/material/styles';</span>
 <span class="cstat-no" title="statement not covered" >import React, { Suspense } from 'react';</span>
-<span class="cstat-no" title="statement not covered" >import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';</span>
-<span class="cstat-no" title="statement not covered" >import { ThemeSwitcher } from './components/ThemeSwitcher';</span>
+<span class="cstat-no" title="statement not covered" >import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';</span>
+<span class="cstat-no" title="statement not covered" >import { HOSTED_PATH } from '../constants';</span>
+<span class="cstat-no" title="statement not covered" >import ErrorBoundary from './components/ErrorBoundary';</span>
+<span class="cstat-no" title="statement not covered" >import { LoadingSpinner } from './components/LoadingSpinner';</span>
 <span class="cstat-no" title="statement not covered" >import { MainLayout } from './layouts/MainLayout';</span>
 <span class="cstat-no" title="statement not covered" >import { useAppTheme } from './store/themeSlice';</span>
 <span class="cstat-no" title="statement not covered" >import { darkTheme, lightTheme } from './theme';</span>
-<span class="cstat-no" title="statement not covered" >import { Box, CircularProgress } from '@mui/material';</span>
-&nbsp;
 const DashboardPageLazy = <span class="cstat-no" title="statement not covered" >React.lazy(<span class="fstat-no" title="function not covered" >() =</span>&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > import('</span>./pages/DashboardPage'))</span>;</span>
 const EmployeesPageLazy = <span class="cstat-no" title="statement not covered" >React.lazy(<span class="fstat-no" title="function not covered" >() =</span>&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > import('</span>./pages/EmployeesPage'))</span>;</span>
 const StatisticsPageLazy = <span class="cstat-no" title="statement not covered" >React.lazy(<span class="fstat-no" title="function not covered" >() =</span>&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > import('</span>./pages/StatisticsPage'))</span>;</span>
 const NotFoundPageLazy = <span class="cstat-no" title="statement not covered" >React.lazy(<span class="fstat-no" title="function not covered" >() =</span>&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > import('</span>./pages/NotFoundPage'))</span>;</span>
 &nbsp;
 function <span class="fstat-no" title="function not covered" >App(</span>) {
-  const { mode, setTheme } = <span class="cstat-no" title="statement not covered" >useAppTheme();</span>
-&nbsp;
-  const renderLoadingSpinner = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; (</span>
-<span class="cstat-no" title="statement not covered" >    &lt;Box</span>
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      bgcolor="background.default"
-      color="text.primary"
-      textAlign="center"
-      p={3}
-    &gt;
-      &lt;CircularProgress /&gt;
-    &lt;/Box&gt;
-  );
+  const { mode } = <span class="cstat-no" title="statement not covered" >useAppTheme();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;ThemeProvider theme={mode === 'dark' ? darkTheme : lightTheme}&gt;
-      &lt;Router
-        basename={process.env.NODE_ENV === 'development' ? '/' : '/hris-hp'}
+    &lt;ErrorBoundary&gt;
+      &lt;ThemeProvider
+        theme={mode === 'dark' || mode === 'system' ? darkTheme : lightTheme}
       &gt;
-        &lt;MainLayout&gt;
-          &lt;ThemeSwitcher mode={mode} onChange={setTheme} /&gt;
-          &lt;Suspense fallback={renderLoadingSpinner()}&gt;
-            &lt;Routes&gt;
-              &lt;Route path="/" element={&lt;DashboardPageLazy /&gt;} /&gt;
-              &lt;Route path="/employees" element={&lt;EmployeesPageLazy /&gt;} /&gt;
-              &lt;Route path="/statistics" element={&lt;StatisticsPageLazy /&gt;} /&gt;
-              &lt;Route path="*" element={&lt;NotFoundPageLazy /&gt;} /&gt;
-            &lt;/Routes&gt;
-          &lt;/Suspense&gt;
-        &lt;/MainLayout&gt;
-        {/* &lt;Footer /&gt; */}
-      &lt;/Router&gt;
-    &lt;/ThemeProvider&gt;
+        &lt;Router
+          basename={process.env.NODE_ENV === 'development' ? '/' : HOSTED_PATH}
+        &gt;
+          &lt;MainLayout&gt;
+            {/* &lt;ThemeSwitcher /&gt; */}
+            &lt;Suspense fallback={&lt;LoadingSpinner /&gt;}&gt;
+              &lt;Routes&gt;
+                &lt;Route path="/" element={&lt;DashboardPageLazy /&gt;} /&gt;
+                &lt;Route path="/employees" element={&lt;EmployeesPageLazy /&gt;} /&gt;
+                &lt;Route path="/statistics" element={&lt;StatisticsPageLazy /&gt;} /&gt;
+                &lt;Route path="*" element={&lt;NotFoundPageLazy /&gt;} /&gt;
+              &lt;/Routes&gt;
+            &lt;/Suspense&gt;
+          &lt;/MainLayout&gt;
+          {/* &lt;Footer /&gt; */}
+        &lt;/Router&gt;
+      &lt;/ThemeProvider&gt;
+    &lt;/ErrorBoundary&gt;
   );
 }
 &nbsp;
@@ -238,7 +202,7 @@ function <span class="fstat-no" title="function not covered" >App(</span>) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-10T10:23:38.168Z
+                at 2025-02-11T04:03:15.870Z
             </div>
         <script src="../prettify.js"></script>
         <script>

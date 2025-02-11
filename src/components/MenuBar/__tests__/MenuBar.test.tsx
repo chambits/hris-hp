@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { MenuBar } from '../MenuBar';
+import store from '../../../store';
+import { Provider } from 'react-redux';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -27,15 +29,14 @@ describe('MenuBar', () => {
   it('renders desktop menu on large screens (>= 1200px)', () => {
     setDesktopView();
     render(
-      <MemoryRouter>
-        <MenuBar />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <MenuBar />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getAllByText('Heartpace HR')[0]).toBeInTheDocument();
-    // expect(screen.getByText('Dashboard')).toBeInTheDocument();
-    // expect(screen.getByText('Employees')).toBeInTheDocument();
-    // expect(screen.getByText('Statistics')).toBeInTheDocument();
 
     expect(
       screen.queryByRole('button', { name: /menu/i })
@@ -45,39 +46,40 @@ describe('MenuBar', () => {
   it('renders mobile menu on small screens (< 600px)', () => {
     setMobileView();
     render(
-      <MemoryRouter>
-        <MenuBar />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <MenuBar />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
-    // Menu items should be hidden initially
-    // expect(screen.getByTestId('desktop-menu')).not.toBeVisible();
   });
 
   it('opens mobile menu when hamburger icon is clicked (< 600px)', () => {
     setMobileView();
     render(
-      <MemoryRouter>
-        <MenuBar />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <MenuBar />
+        </MemoryRouter>
+      </Provider>
     );
 
     const menuButton = screen.getByTestId('mobile-menu');
     fireEvent.click(menuButton);
 
     expect(screen.getAllByText('Heartpace HR')[0]).toBeInTheDocument();
-    // expect(screen.getByText('Dashboard')).toBeVisible();
-    // expect(screen.getByText('Employees')).toBeVisible();
-    // expect(screen.getByText('Statistics')).toBeVisible();
   });
 
   it('closes mobile menu when a menu item is clicked (< 600px)', () => {
     setMobileView();
     render(
-      <MemoryRouter>
-        <MenuBar />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <MenuBar />
+        </MemoryRouter>
+      </Provider>
     );
 
     const menuButton = screen.getByTestId('mobile-menu');

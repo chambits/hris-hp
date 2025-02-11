@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../../../store';
 import { Employee, EmployeeStatus } from '../types';
-import { EmployeesTable } from '../EmployeesTable';
+import { EmployeesTable } from '../components/EmployeesTable';
 
 jest.mock('../employeesApi', () => ({
   ...jest.requireActual('../employeesApi'),

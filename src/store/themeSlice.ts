@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '.';
 
+export type ThemeMode = 'Light' | 'Dark' | 'System';
+
 interface ThemeState {
-  mode: 'light' | 'dark' | 'system';
+  mode: ThemeMode;
 }
 
 const initialState: ThemeState = {
-  mode: 'light',
+  mode: 'Light',
 };
 
 const themeSlice = createSlice({
@@ -29,6 +31,6 @@ export const useAppTheme = () => {
 
   return {
     mode,
-    setTheme: (value: 'light' | 'dark' | 'system') => dispatch(setTheme(value)),
+    setTheme: (value: ThemeMode) => dispatch(setTheme(value)),
   };
 };
