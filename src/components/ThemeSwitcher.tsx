@@ -1,8 +1,14 @@
+import { KeyboardArrowDown } from '@mui/icons-material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
-import { Box, Menu, MenuItem, useMediaQuery } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { ThemeMode, useAppTheme } from '../store/themeSlice';
 
@@ -26,9 +32,9 @@ export const ThemeSwitcher: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const handleThemeChange = (newMode: ThemeMode) => {
+  const handleThemeSelect = (newMode: ThemeMode) => {
     setTheme(newMode);
-    handleClose();
+    setAnchorEl(null);
   };
 
   const getIcon = () => {
@@ -45,29 +51,56 @@ export const ThemeSwitcher: React.FC = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="flex-start" alignItems="center">
-      <IconButton onClick={handleClick}>{getIcon()}</IconButton>
+    <>
+      <Button
+        onClick={handleClick}
+        startIcon={getIcon()}
+        endIcon={
+          <KeyboardArrowDown
+            sx={{
+              transition: 'transform 0.2s',
+              transform: anchorEl ? 'rotate(180deg)' : 'rotate(0)',
+            }}
+          />
+        }
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1.5,
+          paddingX: 2,
+          paddingY: 1,
+          color: 'white',
+          borderRadius: 1,
+          textTransform: 'none',
+          '&:hover': {
+            bgcolor: '#111827',
+          },
+          marginBottom: 2,
+        }}
+      >
+        <Typography>{mode} Mode</Typography>
+      </Button>
+
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem
-          onClick={() => handleThemeChange('Light')}
+          onClick={() => handleThemeSelect('Light')}
           selected={mode === 'Light'}
         >
           <LightModeIcon sx={{ mr: 1 }} /> Light
         </MenuItem>
         <MenuItem
-          onClick={() => handleThemeChange('Dark')}
+          onClick={() => handleThemeSelect('Dark')}
           selected={mode === 'Dark'}
         >
           <DarkModeIcon sx={{ mr: 1 }} /> Dark
         </MenuItem>
         <MenuItem
-          onClick={() => handleThemeChange('System')}
+          onClick={() => handleThemeSelect('System')}
           selected={mode === 'System'}
         >
           <SettingsBrightnessIcon sx={{ mr: 1 }} /> System
         </MenuItem>
       </Menu>
-      <Box color="white">{mode} Mode</Box>
-    </Box>
+    </>
   );
 };

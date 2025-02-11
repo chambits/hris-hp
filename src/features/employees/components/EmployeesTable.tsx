@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, useTheme } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import {
   ClientSideRowModelModule,
@@ -12,15 +12,13 @@ import {
   ModuleRegistry,
   NumberFilterModule,
   TextFilterModule,
-  colorSchemeLight,
   themeQuartz,
 } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { useCallback, useMemo, useRef } from 'react';
-import { useAppTheme } from '../../../store/themeSlice';
+import { useQuartzTheme } from '../hooks/useQuartzTheme';
 import { Employee } from '../types';
 
-const themeLight = themeQuartz.withPart(colorSchemeLight);
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   ColumnAutoSizeModule,
@@ -44,61 +42,42 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
 }) => {
   const gridRef = useRef<AgGridReact>(null);
   const gridStyle = useMemo(() => ({ height: '70vh', width: '100%' }), []);
-  const { mode } = useAppTheme();
-  const theme = useTheme();
+  const theme = useQuartzTheme(themeQuartz);
 
-  const themeDark = themeQuartz.withParams({
-    backgroundColor: '#090E23',
-    foregroundColor: theme.palette.text.primary,
-    headerTextColor: theme.palette.text.primary,
-    headerBackgroundColor: theme.palette.background.default,
-    oddRowBackgroundColor: theme.palette.background.default,
-    headerColumnResizeHandleColor: theme.palette.text.primary,
-  });
-
-  const statusCellRenderer = useCallback((params: { value: string }) => {
-    const status = params.value;
-    let color = '';
-    let backgroundColor = '';
-    switch (status) {
-      case 'Active':
-        color = 'white';
-        backgroundColor = 'green';
-        break;
-      case 'On Leave':
-        color = 'white';
-        backgroundColor = 'blue';
-        break;
-      case 'Terminated':
-        color = 'white';
-        backgroundColor = 'red';
-        break;
-      case 'Probation':
-        color = 'white';
-        backgroundColor = 'orange';
-        break;
-      case 'Retired':
-        color = 'white';
-        backgroundColor = 'purple';
-        break;
-      default:
-        color = 'black';
-        backgroundColor = 'gray';
-    }
-
-    return (
-      <Box
-        component="span"
-        color={color}
-        bgcolor={backgroundColor}
-        padding="2px 8px"
-        borderRadius="4px"
-        fontWeight="semibold"
-      >
-        {status}
-      </Box>
-    );
+  const statusColors: Record<
+    string,
+    { color: string; backgroundColor: string }
+  > = useMemo(() => {
+    return {
+      Active: { color: 'white', backgroundColor: 'green' },
+      'On Leave': { color: 'white', backgroundColor: 'blue' },
+      Terminated: { color: 'white', backgroundColor: 'red' },
+      Probation: { color: 'white', backgroundColor: 'orange' },
+      Retired: { color: 'white', backgroundColor: 'purple' },
+      Default: { color: 'black', backgroundColor: 'gray' },
+    };
   }, []);
+
+  const statusCellRenderer = useCallback(
+    ({ value }: { value: string }) => {
+      const { color, backgroundColor } =
+        statusColors[value] || statusColors.Default;
+      return (
+        <Box
+          component="span"
+          color={color}
+          bgcolor={backgroundColor}
+          paddingX={0.5}
+          paddingY={0.25}
+          borderRadius={0.5}
+          fontWeight="semibold"
+        >
+          {value}
+        </Box>
+      );
+    },
+    [statusColors]
+  );
 
   const actionCellRenderer = useCallback(
     (params: { data: Employee }) => {
@@ -107,22 +86,42 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
           display="flex"
           justifyContent="center"
           alignItems="center"
-          gap={1}
-          padding={0.5}
+          gap={0.5}
         >
-          <EditIcon
-            data-testid="edit-icon"
-            style={{ cursor: 'pointer' }}
-            fontSize="small"
-            onClick={() => onRowEdited?.(params.data)}
-          />
-          <Divider orientation="vertical" flexItem />
-          <DeleteIcon
-            data-testid="delete-icon"
-            style={{ cursor: 'pointer', color: 'red' }}
-            fontSize="small"
-            onClick={() => onRowDeleted?.(params.data.id)}
-          />
+          <Tooltip title="Edit Employee" arrow placement="top">
+            <IconButton
+              data-testid="edit-icon"
+              size="small"
+              onClick={() => onRowEdited?.(params.data)}
+              sx={{
+                padding: 0.5,
+                '& .MuiSvgIcon-root': {
+                  fontSize: '1rem',
+                },
+              }}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Divider orientation="vertical" flexItem sx={{ height: 16 }} />
+
+          <Tooltip title="Delete Employee" arrow placement="top">
+            <IconButton
+              data-testid="delete-icon"
+              size="small"
+              onClick={() => onRowDeleted?.(params.data.id)}
+              sx={{
+                padding: 0.5,
+                color: 'error.main',
+                '& .MuiSvgIcon-root': {
+                  fontSize: '1rem',
+                },
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
       );
     },
@@ -171,27 +170,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
   }, []);
 
   const onGridSizeChanged = useCallback((params: GridSizeChangedEvent) => {
-    const gridWidth = document.querySelector('.ag-body-viewport')!.clientWidth;
-    const columnsToShow = [];
-    const columnsToHide = [];
-    let totalColsWidth = 0;
-    const allColumns = params.api.getColumns();
-    if (allColumns && allColumns.length > 0) {
-      for (let i = 0; i < allColumns.length; i++) {
-        const column = allColumns[i];
-        totalColsWidth += column.getMinWidth();
-        if (totalColsWidth > gridWidth) {
-          columnsToHide.push(column.getColId());
-        } else {
-          columnsToShow.push(column.getColId());
-        }
-      }
-    }
-    params.api.setColumnsVisible(columnsToShow, true);
-    params.api.setColumnsVisible(columnsToHide, false);
-    window.setTimeout(() => {
-      params.api.sizeColumnsToFit();
-    }, 10);
+    params.api.sizeColumnsToFit();
   }, []);
 
   const onFirstDataRendered = useCallback((params: FirstDataRenderedEvent) => {
@@ -203,7 +182,6 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
       <AgGridReact
         popupParent={document.body}
         ref={gridRef}
-        onRowClicked={(e) => console.log('ROW CLICKED', e)}
         className="ag-theme-quartz"
         rowData={employees}
         columnDefs={columnDefs}
@@ -211,7 +189,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
         loading={isLoading}
         onGridSizeChanged={onGridSizeChanged}
         onFirstDataRendered={onFirstDataRendered}
-        theme={mode === 'Dark' ? themeDark : themeLight}
+        theme={theme}
       />
     </div>
   );

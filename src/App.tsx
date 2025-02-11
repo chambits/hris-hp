@@ -20,11 +20,8 @@ function App() {
       <ThemeProvider
         theme={mode === 'Dark' || mode === 'System' ? darkTheme : lightTheme}
       >
-        <Router
-          basename={process.env.NODE_ENV === 'development' ? '/' : HOSTED_PATH}
-        >
+        <Router basename={HOSTED_PATH}>
           <MainLayout>
-            {/* <ThemeSwitcher /> */}
             <Suspense fallback={<LoadingSpinner />}>
               <Routes>
                 <Route path="/" element={<DashboardPageLazy />} />
@@ -34,7 +31,6 @@ function App() {
               </Routes>
             </Suspense>
           </MainLayout>
-          {/* <Footer /> */}
         </Router>
       </ThemeProvider>
     </ErrorBoundary>

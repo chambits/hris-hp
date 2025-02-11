@@ -97,7 +97,7 @@ const MenuContent = ({ onItemClick }: MenuContentProps) => {
               fontFamily: 'Raleway',
             }}
           >
-            Heartpace HR
+            HEARTPACE HR
           </Typography>
           <Divider sx={{ bgcolor: 'grey' }} />
           <MenuList>
@@ -134,8 +134,9 @@ export const MenuBar = () => {
         justifyContent="space-between"
         width="100%"
         sx={{
-          backgroundColor: theme.palette.background.default,
           display: { xs: 'block', md: 'none' },
+          height: 50,
+          background: theme.palette.background.paper,
         }}
         height={50}
       >
@@ -169,8 +170,8 @@ export const MenuBar = () => {
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', md: 'none' },
-          width: 400,
-          backgroundColor: '#090E23',
+          width: 0,
+          backgroundColor: theme.palette.background.paper,
         }}
         data-testid="mobile-menu"
       >

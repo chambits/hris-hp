@@ -36,7 +36,7 @@ describe('MenuBar', () => {
       </Provider>
     );
 
-    expect(screen.getAllByText('Heartpace HR')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('HEARTPACE HR')[0]).toBeInTheDocument();
 
     expect(
       screen.queryByRole('button', { name: /menu/i })
@@ -69,7 +69,7 @@ describe('MenuBar', () => {
     const menuButton = screen.getByTestId('mobile-menu');
     fireEvent.click(menuButton);
 
-    expect(screen.getAllByText('Heartpace HR')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('HEARTPACE HR')[0]).toBeInTheDocument();
   });
 
   it('closes mobile menu when a menu item is clicked (< 600px)', () => {

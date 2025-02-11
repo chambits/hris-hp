@@ -1,6 +1,7 @@
 import { Search } from '@mui/icons-material';
 import { Box, Button, Grid, Paper, Skeleton, TextField } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ConfirmationDialog } from '../components/ConfirmationDialog';
 import { PageHeader } from '../components/PageHeader';
 import { EmployeeForm } from '../features/employees/components/EmployeeForm';
@@ -48,13 +49,32 @@ export const EmployeesPage = () => {
     null
   );
 
-  const {
-    data: employees,
-    isLoading,
-    refetch,
-  } = useGetEmployeesQuery({ q: searchTerm });
+  const { data: employees, isLoading } = useGetEmployeesQuery(
+    searchTerm ? { q: searchTerm } : undefined
+  );
 
   const [deleteEmployee] = useDeleteEmployeeMutation();
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setSearchTerm(value);
+      }, 500),
+    []
+  );
+
+  const handleSearch = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      debouncedSearch(event.target.value);
+    },
+    [debouncedSearch]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const handleOpenModal = useCallback((mode: 'add' | 'edit') => {
     setModalMode(mode);
@@ -64,10 +84,6 @@ export const EmployeesPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingEmployee(null);
-  };
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
   };
 
   const handleRowDeleted = useCallback((id: string) => {
@@ -95,10 +111,6 @@ export const EmployeesPage = () => {
     handleDialogClose();
   };
 
-  useEffect(() => {
-    refetch();
-  }, [searchTerm, refetch]);
-
   return (
     <>
       <PageHeader
@@ -121,7 +133,6 @@ export const EmployeesPage = () => {
                   fullWidth
                   size="small"
                   placeholder="Search employees"
-                  value={searchTerm}
                   onChange={handleSearch}
                   InputProps={{
                     startAdornment: <Search />,

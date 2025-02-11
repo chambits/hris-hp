@@ -4,7 +4,7 @@ import React from 'react';
 import { PageHeader } from '../components/PageHeader';
 import { EmployeesTable } from '../features/employees/components/EmployeesTable';
 import { useGetEmployeesQuery } from '../features/employees/employeesApi';
-import { Employee } from '../features/employees/types';
+import { Employee, EmployeeStatus } from '../features/employees/types';
 import { PieChart } from '../features/statistics';
 import { BarChart } from '../features/statistics/components/BarChart';
 import { ChartSection } from '../features/statistics/components/ChartSection';
@@ -58,8 +58,13 @@ const useEmployeeStats = (employees: Employee[]): DashboardStats => {
   return React.useMemo(
     () => ({
       total: employees.length,
-      active: employees.filter((emp) => emp.status === 'Active').length,
-      onLeave: employees.filter((emp) => emp.status === 'On Leave').length,
+      active: employees.filter(
+        (emp) =>
+          emp.status === EmployeeStatus.ACTIVE ||
+          emp.status === EmployeeStatus.PROBATION
+      ).length,
+      onLeave: employees.filter((emp) => emp.status === EmployeeStatus.ON_LEAVE)
+        .length,
     }),
     [employees]
   );
@@ -109,7 +114,7 @@ const StatsSection = ({
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <StatCard
-            title="Active Employees"
+            title="Working Employees"
             value={stats.active}
             icon={<PersonOutline fontSize="large" />}
           />
@@ -180,7 +185,7 @@ const RecentEmployeesSection = ({
 );
 
 export const DashboardPage = () => {
-  const { data: employees = [], isLoading } = useGetEmployeesQuery({});
+  const { data: employees = [], isLoading } = useGetEmployeesQuery();
   const stats = useEmployeeStats(employees);
   const recentEmployees = useRecentEmployees(employees);
 

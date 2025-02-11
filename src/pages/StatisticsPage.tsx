@@ -17,7 +17,7 @@ const chartConfigs = [
 ];
 
 const StatisticsPage = () => {
-  const { data: employees = [], isLoading } = useGetEmployeesQuery({ q: '' });
+  const { data: employees = [], isLoading } = useGetEmployeesQuery();
 
   return (
     <>
