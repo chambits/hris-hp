@@ -69,6 +69,7 @@ const ResponsiveScatterPlot = ({
             fill: axisColor,
             fontSize: 12,
             textAnchor: 'middle',
+            dx: 12,
           }}
         />
 

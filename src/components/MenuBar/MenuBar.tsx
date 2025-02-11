@@ -167,7 +167,11 @@ export const MenuBar = () => {
         open={mobileOpen}
         onClose={handleMobileClose}
         ModalProps={{ keepMounted: true }}
-        sx={{ display: { xs: 'block', md: 'none' }, width: 400 }}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+          width: 400,
+          backgroundColor: '#090E23',
+        }}
         data-testid="mobile-menu"
       >
         <MenuContent onItemClick={handleMobileClose} />

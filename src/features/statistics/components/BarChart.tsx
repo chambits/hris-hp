@@ -81,8 +81,15 @@ const BaseChart: React.FC<ChartProps & { width: number; height: number }> = ({
             tickLabelProps={() => ({
               ...axisProps.tickLabelProps(),
               textAnchor: 'end',
-              dx: -4,
+              dx: -1,
             })}
+            label="Number of Employees"
+            labelProps={{
+              fill: axisColor,
+              fontSize: 12,
+              textAnchor: 'middle',
+              dx: 4,
+            }}
           />
 
           <AxisBottom

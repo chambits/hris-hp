@@ -8,6 +8,9 @@ import { LinePath } from '@visx/shape';
 import { Employee } from '../../employees/types';
 import { useStats } from '../hooks/useStats';
 
+interface LineChartProps {
+  employees: Employee[];
+}
 interface ResponsiveLineChartProps {
   width: number;
   height: number;
@@ -61,6 +64,7 @@ const ResponsiveLineChart = ({ width, height }: ResponsiveLineChartProps) => {
             fill: axisColor,
             fontSize: 12,
             textAnchor: 'middle',
+            dx: 12,
           }}
         />
 
@@ -71,15 +75,17 @@ const ResponsiveLineChart = ({ width, height }: ResponsiveLineChartProps) => {
           tickStroke={axisColor}
           tickLabelProps={() => ({
             fill: axisColor,
-            textAnchor: 'middle',
+            textAnchor: 'end',
             dy: 1,
             fontSize: 10,
+            angle: -45,
           })}
           label="Year"
           labelProps={{
             fill: axisColor,
             fontSize: 12,
             textAnchor: 'middle',
+            dy: 12,
           }}
         />
 
@@ -95,10 +101,6 @@ const ResponsiveLineChart = ({ width, height }: ResponsiveLineChartProps) => {
     </svg>
   );
 };
-
-interface LineChartProps {
-  employees: Employee[];
-}
 
 export const LineChart = ({ employees }: LineChartProps) => {
   return (
