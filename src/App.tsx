@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@mui/material/styles';
 import React, { Suspense } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { HOSTED_PATH } from '../constants';
+import { HOSTED_PATH } from './constants';
 import ErrorBoundary from './components/ErrorBoundary';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { MainLayout } from './layouts/MainLayout';
