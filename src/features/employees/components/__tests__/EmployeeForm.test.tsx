@@ -1,24 +1,13 @@
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import { employees } from '../../../../test-utils/mock-data';
 import {
   fireEvent,
   render,
   screen,
   waitFor,
 } from '../../../../test-utils/test-utils';
-import { Department, Employee, EmployeeStatus } from '../../types';
 import { EmployeeForm } from '../EmployeeForm';
-
-const mockInitialData: Partial<Employee> = {
-  name: 'John Doe',
-  email: 'john@example.com',
-  position: 'Developer',
-  department: Department.ENGINEERING,
-  hireDate: '2024-01-01',
-  status: EmployeeStatus.ACTIVE,
-  age: 30,
-  country: 'USA',
-};
 
 describe('EmployeeForm', () => {
   const onClose = jest.fn();
@@ -65,13 +54,12 @@ describe('EmployeeForm', () => {
   });
 
   it('populates form fields with initial data in edit mode', () => {
-    renderForm('edit', mockInitialData);
+    const employee = employees[0];
+    renderForm('edit', employee);
 
-    expect(screen.getByLabelText(/name/i)).toHaveValue(mockInitialData.name);
-    expect(screen.getByLabelText(/email/i)).toHaveValue(mockInitialData.email);
-    expect(screen.getByLabelText(/position/i)).toHaveValue(
-      mockInitialData.position
-    );
+    expect(screen.getByLabelText(/name/i)).toHaveValue(employee.name);
+    expect(screen.getByLabelText(/email/i)).toHaveValue(employee.email);
+    expect(screen.getByLabelText(/position/i)).toHaveValue(employee.position);
   });
 
   it('shows validation errors for required fields', async () => {
