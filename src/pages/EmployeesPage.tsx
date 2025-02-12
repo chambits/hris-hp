@@ -1,5 +1,14 @@
 import { Search } from '@mui/icons-material';
-import { Box, Button, Grid, Paper, Skeleton, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Skeleton,
+  TextField,
+  Alert,
+  Snackbar,
+} from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ConfirmationDialog } from '../components/ConfirmationDialog';
@@ -48,6 +57,7 @@ export const EmployeesPage = () => {
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string | null>(
     null
   );
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const { data: employees, isLoading } = useGetEmployeesQuery(
     searchTerm ? { q: searchTerm } : undefined
@@ -59,7 +69,7 @@ export const EmployeesPage = () => {
     () =>
       debounce((value: string) => {
         setSearchTerm(value);
-      }, 500),
+      }, 300),
     []
   );
 
@@ -107,6 +117,7 @@ export const EmployeesPage = () => {
   const handleConfirmDelete = () => {
     if (selectedEmployeeId) {
       deleteEmployee(selectedEmployeeId);
+      setShowSnackbar(true);
     }
     handleDialogClose();
   };
@@ -190,6 +201,20 @@ export const EmployeesPage = () => {
         cancelText="Cancel"
         confirmColor="error"
       />
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={5000}
+        onClose={() => setShowSnackbar(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setShowSnackbar(false)}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Employee successfully deleted
+        </Alert>
+      </Snackbar>
     </>
   );
 };

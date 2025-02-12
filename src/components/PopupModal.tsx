@@ -1,4 +1,5 @@
-import { Box, Modal, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Modal, Typography, useTheme } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import React from 'react';
 
 interface PopupModalProps {
@@ -42,7 +43,20 @@ export const PopupModal: React.FC<PopupModalProps> = ({
         overflow="hidden"
         borderRadius={1}
         margin={2}
+        position="relative"
       >
+        <IconButton
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 1,
+          }}
+          aria-label="close"
+        >
+          <Close />
+        </IconButton>
         <Box
           display="flex"
           justifyContent="center"
@@ -53,19 +67,6 @@ export const PopupModal: React.FC<PopupModalProps> = ({
           <Typography variant="h6" component="h2">
             {title}
           </Typography>
-          {/* <IconButton
-            onClick={onClose}
-            size="small"
-            aria-label="close"
-            sx={{
-              color: 'text.secondary',
-              '&:hover': {
-                color: 'text.primary',
-              },
-            }}
-          >
-            <Close />
-          </IconButton> */}
         </Box>
         {children}
       </Box>

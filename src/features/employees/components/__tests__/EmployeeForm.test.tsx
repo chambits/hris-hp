@@ -88,14 +88,14 @@ describe('EmployeeForm', () => {
     });
   });
 
-  //   it('closes form when close button is clicked', () => {
-  //     renderForm();
+  it('closes form when close button is clicked', () => {
+    renderForm();
 
-  //     const closeButton = screen.getByRole('button', { name: /close/i });
-  //     fireEvent.click(closeButton);
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    fireEvent.click(closeButton);
 
-  //     expect(onClose).toHaveBeenCalled();
-  //   });
+    expect(onClose).toHaveBeenCalled();
+  });
 
   //   it('submits form with valid data', async () => {
   //     const { store } = renderForm('add');

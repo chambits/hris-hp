@@ -129,29 +129,14 @@ export const MenuBar = () => {
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        width="100%"
+      <IconButton
         sx={{
           display: { xs: 'block', md: 'none' },
-          height: 50,
-          background: theme.palette.background.paper,
         }}
-        height={50}
+        onClick={() => setMobileOpen(true)}
       >
-        <IconButton
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            position: 'absolute',
-            top: 5,
-            left: 5,
-          }}
-          onClick={() => setMobileOpen(true)}
-        >
-          <Menu />
-        </IconButton>
-      </Box>
+        <Menu />
+      </IconButton>
 
       <Grid item sx={{ display: { xs: 'none', md: 'block' } }}>
         <DesktopMenu

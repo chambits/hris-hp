@@ -1849,15 +1849,15 @@
       "country": "Brazil"
     },
     {
-      "id": "EMP-2528391",
       "name": "Thomas Suzuki",
       "email": "thomas.suzuki@heartpace.com",
       "position": "Controller",
-      "department": "Finance",
+      "department": "Customer Support",
       "hireDate": "2025-01-28",
       "status": "Active",
       "age": 63,
-      "country": "India"
+      "country": "India",
+      "id": "EMP-2528391"
     },
     {
       "id": "EMP-2012815",
@@ -2179,15 +2179,15 @@
       "country": "USA"
     },
     {
-      "id": "EMP-2502992",
       "name": "Michael Davis",
       "email": "michael.davis@heartpace.com",
       "position": "Operations Manager",
       "department": "Operations",
       "hireDate": "2025-02-01",
-      "status": "On Leave",
+      "status": "Active",
       "age": 42,
-      "country": "France"
+      "country": "France",
+      "id": "EMP-2502992"
     },
     {
       "id": "EMP-2004336",
@@ -5930,17 +5930,6 @@
       "country": "USA"
     },
     {
-      "name": "Lucas Tanaka",
-      "email": "lucas.tanaka@heartpace.com",
-      "position": "Research Scientist",
-      "department": "Marketing",
-      "hireDate": "2025-01-31",
-      "status": "Active",
-      "age": 54,
-      "country": "France",
-      "id": "EMP-2531814"
-    },
-    {
       "id": "EMP-2207951",
       "name": "Olivia Li",
       "email": "olivia.li@heartpace.com",
@@ -7512,17 +7501,6 @@
       "status": "Active",
       "age": 39,
       "country": "Canada"
-    },
-    {
-      "id": "EMP-2422136",
-      "name": "Ethan Jackson",
-      "email": "ethan.jackson@heartpace.com",
-      "position": "Customer Success Manager",
-      "department": "Customer Support",
-      "hireDate": "2024-12-22",
-      "status": "Probation",
-      "age": 62,
-      "country": "USA"
     },
     {
       "id": "EMP-1505625",
@@ -18919,17 +18897,6 @@
       "status": "Active",
       "age": 39,
       "country": "Germany"
-    },
-    {
-      "id": "EMP-2505230",
-      "name": "Olivia Taylor",
-      "email": "olivia.taylor@heartpace.com",
-      "position": "Financial Analyst",
-      "department": "Finance",
-      "hireDate": "2025-02-05",
-      "status": "Active",
-      "age": 23,
-      "country": "India"
     },
     {
       "id": "EMP-1522784",

@@ -4,7 +4,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme();
 
   return (
-    <Grid container>
+    <Grid container sx={{ backgroundColor: theme.palette.background.default }}>
       <Grid item xs={12} sm={2}>
         <MenuBar />
       </Grid>
@@ -15,7 +15,6 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         md={10}
         sx={{
           p: 2,
-          backgroundColor: theme.palette.background.default,
           height: '100vh',
           overflowY: 'scroll',
         }}

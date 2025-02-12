@@ -35,24 +35,6 @@ export const employeesApi = createApi({
         method: 'POST',
         body: employee,
       }),
-      //   async onQueryStarted(employee, { dispatch, queryFulfilled }) {
-      //     // Optimistically update the UI before server response
-      //     const patchResult = dispatch(
-      //       employeesApi.util.updateQueryData(
-      //         'getEmployees',
-      //         undefined,
-      //         (draft) => {
-      //           draft.push({ ...employee, id: Date.now().toString() });
-      //         }
-      //       )
-      //     );
-
-      //     try {
-      //       await queryFulfilled;
-      //     } catch {
-      //       patchResult.undo();
-      //     }
-      //   },
       invalidatesTags: [{ type: 'Employees', id: 'LIST' }],
     }),
     deleteEmployee: builder.mutation<void, string>({

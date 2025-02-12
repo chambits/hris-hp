@@ -32,6 +32,7 @@ interface EmployeesTableProps {
   isLoading: boolean;
   onRowDeleted?: (id: string) => void;
   onRowEdited?: (employee: Employee) => void;
+  hideActions?: boolean;
 }
 
 export const EmployeesTable: React.FC<EmployeesTableProps> = ({
@@ -39,6 +40,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
   isLoading,
   onRowDeleted,
   onRowEdited,
+  hideActions,
 }) => {
   const gridRef = useRef<AgGridReact>(null);
   const gridStyle = useMemo(() => ({ height: '70vh', width: '100%' }), []);
@@ -82,12 +84,15 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
 
   const actionCellRenderer = useCallback(
     (params: { data: Employee }) => {
+      if (hideActions) return null;
+
       return (
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
           gap={0.5}
+          marginTop={0.5}
         >
           <Tooltip title="Edit Employee" arrow placement="top">
             <IconButton
@@ -105,7 +110,11 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
             </IconButton>
           </Tooltip>
 
-          <Divider orientation="vertical" flexItem sx={{ height: 16 }} />
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ height: 16, marginTop: 0.5 }}
+          />
 
           <Tooltip title="Delete Employee" arrow placement="top">
             <IconButton
@@ -126,7 +135,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
         </Box>
       );
     },
-    [onRowDeleted, onRowEdited]
+    [onRowDeleted, onRowEdited, hideActions]
   );
 
   const columnDefs = useMemo<ColDef[]>(
@@ -149,17 +158,21 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
       },
       { field: 'age', minWidth: 60 },
       { field: 'country', minWidth: 80 },
-      {
-        headerName: 'Actions',
-        field: 'actions',
-        minWidth: 80,
-        cellRenderer: actionCellRenderer,
-        filter: false,
-        sortable: false,
-        resizable: false,
-      },
+      ...(hideActions
+        ? []
+        : [
+            {
+              headerName: 'Actions',
+              field: 'actions',
+              minWidth: 80,
+              cellRenderer: actionCellRenderer,
+              filter: false,
+              sortable: false,
+              resizable: false,
+            },
+          ]),
     ],
-    [actionCellRenderer, statusCellRenderer]
+    [actionCellRenderer, hideActions, statusCellRenderer]
   );
 
   const defaultColDef = useMemo<ColDef>(() => {

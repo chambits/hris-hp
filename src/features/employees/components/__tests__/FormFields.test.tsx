@@ -32,9 +32,7 @@ describe('FormFields', () => {
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/position/i)).toBeInTheDocument();
-    // expect(screen.getByLabelText(/department/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/hire date/i)).toBeInTheDocument();
-    // expect(screen.getByLabelText(/status/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/age/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/country/i)).toBeInTheDocument();
   });
@@ -56,14 +54,4 @@ describe('FormFields', () => {
     fireEvent.change(nameInput, { target: { value: 'Jane Doe' } });
     expect(mockFormik.handleChange).toHaveBeenCalled();
   });
-
-  //   it('renders select fields with correct options', () => {
-  //     renderForm();
-  //     const statusSelect = screen.getByLabelText(/status/i);
-  //     fireEvent.mouseDown(statusSelect);
-
-  //     Object.values(EmployeeStatus).forEach((status) => {
-  //       expect(screen.getByText(status)).toBeInTheDocument();
-  //     });
-  //   });
 });

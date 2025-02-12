@@ -159,7 +159,11 @@ const RecentEmployeesSection = ({
         <Typography variant="h6" gutterBottom>
           Recent Employees
         </Typography>
-        <EmployeesTable employees={employees || []} isLoading={isLoading} />
+        <EmployeesTable
+          employees={employees || []}
+          isLoading={isLoading}
+          hideActions
+        />
       </Paper>
     )}
   </Grid>
