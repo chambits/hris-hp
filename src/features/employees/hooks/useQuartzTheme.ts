@@ -7,11 +7,11 @@ export const useQuartzTheme = (themeQuartz: Theme) => {
   const theme = useTheme();
 
   const themeDark = themeQuartz.withParams({
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     foregroundColor: theme.palette.text.primary,
     headerTextColor: theme.palette.text.primary,
-    headerBackgroundColor: theme.palette.background.default,
-    oddRowBackgroundColor: theme.palette.background.default,
+    headerBackgroundColor: theme.palette.background.paper,
+    oddRowBackgroundColor: theme.palette.background.paper,
     headerColumnResizeHandleColor: theme.palette.text.primary,
   });
 
@@ -19,7 +19,7 @@ export const useQuartzTheme = (themeQuartz: Theme) => {
     backgroundColor: theme.palette.background.default,
     foregroundColor: theme.palette.text.primary,
     headerTextColor: theme.palette.text.primary,
-    headerBackgroundColor: theme.palette.background.default,
+    headerBackgroundColor: theme.palette.background.paper,
     oddRowBackgroundColor: theme.palette.background.paper,
     headerColumnResizeHandleColor: theme.palette.text.primary,
   });

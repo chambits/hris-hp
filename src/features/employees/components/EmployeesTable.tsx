@@ -67,10 +67,11 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
           component="span"
           color={color}
           bgcolor={backgroundColor}
-          paddingX={0.5}
+          paddingX={1}
           paddingY={0.25}
-          borderRadius={0.5}
+          borderRadius={1}
           fontWeight="semibold"
+          fontSize="0.8rem"
         >
           {value}
         </Box>
@@ -132,12 +133,12 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
     () => [
       { field: 'id', minWidth: 120 },
       { field: 'name', minWidth: 120 },
-      { field: 'email', minWidth: 100 },
-      { field: 'position', minWidth: 100 },
+      { field: 'email', minWidth: 120 },
+      { field: 'position', minWidth: 120 },
       { field: 'department', minWidth: 120 },
       {
         field: 'hireDate',
-        minWidth: 100,
+        minWidth: 120,
         filter: 'agDateColumnFilter',
         sort: 'desc',
       },
@@ -146,7 +147,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
         minWidth: 120,
         cellRenderer: statusCellRenderer,
       },
-      { field: 'age', minWidth: 80 },
+      { field: 'age', minWidth: 60 },
       { field: 'country', minWidth: 80 },
       {
         headerName: 'Actions',

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { MenuBar } from '../MenuBar';
-import store from '../../../store';
+import { MenuBar } from '../MenuBar/MenuBar';
 import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
