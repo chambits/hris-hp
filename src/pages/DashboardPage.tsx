@@ -8,32 +8,13 @@ import { Employee, EmployeeStatus } from '../features/employees/types';
 import { PieChart } from '../features/statistics';
 import { BarChart } from '../features/statistics/components/BarChart';
 import { ChartSection } from '../features/statistics/components/ChartSection';
-
-interface StatCardProps {
-  title: string;
-  value: number;
-  icon: React.ReactNode;
-}
+import StatCard from '../features/statistics/components/StatCard';
 
 interface DashboardStats {
   total: number;
   active: number;
   onLeave: number;
 }
-
-const StatCard: React.FC<StatCardProps> = ({ title, value, icon }) => (
-  <Paper sx={{ p: 2 }}>
-    <Box display="flex" alignItems="center" justifyContent="space-between">
-      <Box>
-        <Typography variant="subtitle2" color="textSecondary">
-          {title}
-        </Typography>
-        <Typography variant="h4">{value}</Typography>
-      </Box>
-      <Box sx={{ color: 'primary.main' }}>{icon}</Box>
-    </Box>
-  </Paper>
-);
 
 const StatCardSkeleton = () => (
   <Paper sx={{ p: 2 }}>

@@ -9,15 +9,13 @@ import React, { useMemo } from 'react';
 import { Employee } from '../../employees/types';
 import { useStats } from '../hooks/useStats';
 
-interface ChartProps {
+interface BaseChartProps {
   employees: Employee[];
 }
 
-const BaseChart: React.FC<ChartProps & { width: number; height: number }> = ({
-  employees,
-  width,
-  height,
-}) => {
+const BaseChart: React.FC<
+  BaseChartProps & { width: number; height: number }
+> = ({ employees, width, height }) => {
   const theme = useTheme();
   const [tooltipData, setTooltipData] = React.useState<{
     department: string;
@@ -167,7 +165,7 @@ const BaseChart: React.FC<ChartProps & { width: number; height: number }> = ({
   );
 };
 
-export const BarChart: React.FC<ChartProps> = ({ employees }) => {
+export const BarChart: React.FC<BaseChartProps> = ({ employees }) => {
   return (
     <Box width="100%" height="400px">
       <ParentSize>

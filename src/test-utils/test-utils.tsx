@@ -24,12 +24,14 @@ interface WrapperProps {
   initialState?: unknown;
 }
 
+interface RenderOptions {
+  initialState?: Record<string, unknown>;
+  renderOptions?: unknown;
+}
+
 function render(
   ui: React.ReactElement,
-  {
-    initialState,
-    ...renderOptions
-  }: { initialState?: Record<string, unknown>; renderOptions?: unknown }
+  { initialState, ...renderOptions }: RenderOptions = {}
 ) {
   const store = createTestStore(initialState);
 

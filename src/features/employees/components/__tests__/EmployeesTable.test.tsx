@@ -1,20 +1,6 @@
+import { employees } from '../../../../test-utils/mock-data';
 import { fireEvent, render, screen } from '../../../../test-utils/test-utils';
-import { Employee, EmployeeStatus } from '../../types';
 import { EmployeesTable } from '../EmployeesTable';
-
-const mockEmployees: Employee[] = [
-  {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    position: 'Developer',
-    department: 'Engineering',
-    hireDate: '2024-01-01',
-    status: EmployeeStatus.ACTIVE,
-    age: 30,
-    country: 'USA',
-  },
-];
 
 describe('EmployeesTable', () => {
   const onRowDeleted = jest.fn();
@@ -23,7 +9,7 @@ describe('EmployeesTable', () => {
   const renderTable = (initialState = {}) => {
     return render(
       <EmployeesTable
-        employees={mockEmployees}
+        employees={employees}
         isLoading={false}
         onRowDeleted={onRowDeleted}
         onRowEdited={onRowEdited}
@@ -42,7 +28,7 @@ describe('EmployeesTable', () => {
     renderTable();
     const editButton = screen.getByTestId('edit-icon');
     fireEvent.click(editButton);
-    expect(onRowEdited).toHaveBeenCalledWith(mockEmployees[0]);
+    expect(onRowEdited).toHaveBeenCalledWith(employees[0]);
   });
 
   it('calls onRowDeleted when delete button is clicked', () => {
