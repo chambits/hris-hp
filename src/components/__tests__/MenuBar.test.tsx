@@ -1,8 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { fireEvent, render, screen } from '../../test-utils/test-utils';
 import { MenuBar } from '../MenuBar/MenuBar';
-import { Provider } from 'react-redux';
-import { store } from '../../store';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -28,13 +25,7 @@ describe('MenuBar', () => {
 
   it('renders desktop menu on large screens (>= 1200px)', () => {
     setDesktopView();
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MenuBar />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<MenuBar />);
 
     expect(screen.getAllByText('HEARTPACE HR')[0]).toBeInTheDocument();
 
@@ -45,26 +36,14 @@ describe('MenuBar', () => {
 
   it('renders mobile menu on small screens (< 600px)', () => {
     setMobileView();
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MenuBar />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<MenuBar />);
 
     expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
   });
 
   it('opens mobile menu when hamburger icon is clicked (< 600px)', () => {
     setMobileView();
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MenuBar />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<MenuBar />);
 
     const menuButton = screen.getByTestId('mobile-menu');
     fireEvent.click(menuButton);
@@ -74,13 +53,7 @@ describe('MenuBar', () => {
 
   it('closes mobile menu when a menu item is clicked (< 600px)', () => {
     setMobileView();
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <MenuBar />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<MenuBar />);
 
     const menuButton = screen.getByTestId('mobile-menu');
     fireEvent.click(menuButton);
