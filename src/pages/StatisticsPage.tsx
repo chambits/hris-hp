@@ -7,7 +7,7 @@ import {
   PieChart,
   ScatterPlot,
 } from '../features/statistics';
-import { ChartSection } from '../features/statistics/components/ChartSection';
+import { Chart } from '../features/statistics/components/Chart';
 
 const chartConfigs = [
   { title: 'Employees per Department', Component: BarChart },
@@ -27,13 +27,13 @@ const StatisticsPage = () => {
       />
       <Grid container spacing={4}>
         {chartConfigs.map(({ title, Component }) => (
-          <ChartSection key={title} title={title}>
+          <Chart key={title} title={title}>
             {isLoading ? (
               <Skeleton variant="rectangular" width="100%" height={300} />
             ) : (
               <Component employees={employees} />
             )}
-          </ChartSection>
+          </Chart>
         ))}
       </Grid>
     </>

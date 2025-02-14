@@ -1,15 +1,12 @@
 import { Box, Divider, Grid, Paper, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-interface ChartSectionProps {
+interface ChartProps {
   title: string;
   children: React.ReactNode;
 }
 
-export const ChartSection: React.FC<ChartSectionProps> = ({
-  title,
-  children,
-}) => {
+export const Chart: React.FC<ChartProps> = ({ title, children }) => {
   const theme = useTheme();
   return (
     <Grid item xs={12} sm={12} md={12}>

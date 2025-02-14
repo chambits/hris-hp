@@ -3,7 +3,6 @@ import { employees } from '../../test-utils/mock-data';
 import { render, screen, waitFor } from '../../test-utils/test-utils';
 import { DashboardPage } from '../DashboardPage';
 
-// Mock ResizeObserver for charts
 const mockResizeObserver = jest.fn(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),

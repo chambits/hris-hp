@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '.';
+import { RootState } from './store';
 
 export type ThemeMode = 'Light' | 'Dark' | 'System';
 
@@ -22,7 +22,7 @@ const themeSlice = createSlice({
   },
 });
 
-export const { setTheme } = themeSlice.actions;
+const { setTheme } = themeSlice.actions;
 export default themeSlice.reducer;
 
 export const useAppTheme = () => {

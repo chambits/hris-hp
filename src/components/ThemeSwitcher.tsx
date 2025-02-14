@@ -10,7 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { ThemeMode, useAppTheme } from '../store/themeSlice';
+import { ThemeMode, useAppTheme } from '../app/themeSlice';
 
 export const ThemeSwitcher: React.FC = () => {
   const { mode, setTheme } = useAppTheme();

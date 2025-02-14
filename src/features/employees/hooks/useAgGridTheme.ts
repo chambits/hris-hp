@@ -1,8 +1,8 @@
 import { useTheme } from '@mui/material';
-import { useAppTheme } from '../../../store/themeSlice';
+import { useAppTheme } from '../../../app/themeSlice';
 import { Theme } from 'ag-grid-community';
 
-export const useQuartzTheme = (themeQuartz: Theme) => {
+export const useAgGridTheme = (themeQuartz: Theme) => {
   const { mode } = useAppTheme();
   const theme = useTheme();
 

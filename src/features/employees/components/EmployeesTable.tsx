@@ -16,7 +16,7 @@ import {
 } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { useCallback, useMemo, useRef } from 'react';
-import { useQuartzTheme } from '../hooks/useQuartzTheme';
+import { useAgGridTheme } from '../hooks/useAgGridTheme';
 import { Employee } from '../types';
 
 ModuleRegistry.registerModules([
@@ -44,7 +44,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
 }) => {
   const gridRef = useRef<AgGridReact>(null);
   const gridStyle = useMemo(() => ({ height: '70vh', width: '100%' }), []);
-  const theme = useQuartzTheme(themeQuartz);
+  const theme = useAgGridTheme(themeQuartz);
 
   const statusColors: Record<
     string,

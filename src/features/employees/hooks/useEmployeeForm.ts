@@ -44,6 +44,7 @@ export const useEmployeeForm = (
             ...values,
             id: generateShortIdFromDate(new Date(values.hireDate)),
           };
+          throw new Error('test');
           await addEmployee(employeeWithId).unwrap();
           setSnackbar({
             open: true,
@@ -62,7 +63,7 @@ export const useEmployeeForm = (
       } catch (error: unknown) {
         setSnackbar({
           open: true,
-          message: `Failed to ${mode} employee: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          message: `Failed to ${mode} employee`,
           severity: 'error',
         });
         console.error(

@@ -1702,7 +1702,7 @@
       "hireDate": "2025-02-10",
       "status": "On Leave",
       "age": 40,
-      "country": "USA",
+      "country": "Germany",
       "id": "EMP-2501847"
     },
     {
@@ -2177,17 +2177,6 @@
       "status": "Active",
       "age": 58,
       "country": "USA"
-    },
-    {
-      "name": "Michael Davis",
-      "email": "michael.davis@heartpace.com",
-      "position": "Operations Manager",
-      "department": "Operations",
-      "hireDate": "2025-02-01",
-      "status": "Active",
-      "age": 42,
-      "country": "France",
-      "id": "EMP-2502992"
     },
     {
       "id": "EMP-2004336",
@@ -16578,17 +16567,6 @@
       "country": "USA"
     },
     {
-      "id": "EMP-2525865",
-      "name": "Patricia Rodriguez",
-      "email": "patricia.rodriguez@heartpace.com",
-      "position": "Business Development",
-      "department": "Sales",
-      "hireDate": "2025-01-25",
-      "status": "Active",
-      "age": 45,
-      "country": "UK"
-    },
-    {
       "id": "EMP-2415936",
       "name": "Victoria Smith",
       "email": "victoria.smith@heartpace.com",
@@ -21933,17 +21911,6 @@
       "status": "Active",
       "age": 46,
       "country": "India"
-    },
-    {
-      "name": "Thomas Edison",
-      "email": "thomas@abc.com",
-      "position": "Senior Software Engineer",
-      "department": "Engineering",
-      "hireDate": "2025-02-11",
-      "status": "Active",
-      "age": 30,
-      "country": "England",
-      "id": "EMP-251622"
     }
   ]
 }
