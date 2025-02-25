@@ -44,7 +44,6 @@ export const useEmployeeForm = (
             ...values,
             id: generateShortIdFromDate(new Date(values.hireDate)),
           };
-          throw new Error('test');
           await addEmployee(employeeWithId).unwrap();
           setSnackbar({
             open: true,
