@@ -2,7 +2,7 @@
 
 HRIS-HP is a Human Resource Information System designed to manage employee data efficiently. The initial implementation includes core functionalities like adding, editing, deleting, searching, and filtering employee records. The system also features an analytics dashboard with various visualizations, including donut charts, bar charts, and other statistical representations, to provide insights into workforce metrics.
 
-More details https://bloom-zoo-98d.notion.site/HRIS-HP-196d8896dcab80f18c6ff636638edf6a
+More details => https://bloom-zoo-98d.notion.site/HRIS-HP-196d8896dcab80f18c6ff636638edf6a
 
 ## Installation
 
